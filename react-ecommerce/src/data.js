@@ -38,3 +38,55 @@ export const categories = [
         title: "LIGHT JACKETS"
     }
 ]
+
+
+export const popularProducts = [
+    {
+        id: 1,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/April2022/31-0.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 2,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/April2022/cot_den_2.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 3,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=450,height=663,quality=100/uploads/April2022/polo-anti-trang_76.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 4,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=450,height=663,quality=100/uploads/April2022/polo-anti-trang_76.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 5,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=450,height=663,quality=100/uploads/April2022/polo-anti-trang_76.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 6,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/April2022/31-0.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 7,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=450,height=663,quality=100/uploads/April2022/polo-anti-trang_76.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    },
+    {
+        id: 8,
+        img: "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=100/uploads/February2022/IMG_6966-copys.jpg",
+        title: "SHIRT STYLE",
+        price: 200000
+    }
+]
