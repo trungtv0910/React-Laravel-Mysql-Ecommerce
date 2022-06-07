@@ -2,6 +2,9 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons"
 import styled from "styled-components"
 import Button from '@material-ui/core/Button';
+import React, { useState } from "react";
+import { slideItems } from "../data";
+
 const Container = styled.div`
     width:100%;
     height:100vh;
@@ -32,7 +35,8 @@ const Arrow = styled.div`
 const Wrapper = styled.div`
 height:100%;
 display: flex;
-transform: translateX(0vw);
+transform: translateX(${props => props.slideIndex * -100}vw);
+transition:  all 1.5s ease;
 `
 const Slider = styled.div`
     width: 100vw;
@@ -40,6 +44,7 @@ const Slider = styled.div`
     display: flex;
     align-items: center;
     background-color: #${props => props.bg};
+ 
 
 `
 const ImgContainer = styled.div`
@@ -67,53 +72,36 @@ letter-spacing:3px ;
 
 
 const Slide = () => {
+    const [slideIndex, setSlideIndex] = useState(0);
     // HANDLE
     const handleClick = (direction) => {
-
+        if (direction === 'left') {
+            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+        } else {
+            setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+        }
     }
     return (
         <Container>
             <Arrow direction="left" onClick={() => handleClick('left')}>
                 <ArrowLeftOutlined ></ArrowLeftOutlined>
             </Arrow>
-            <Wrapper>
-                <Slider bg="f5fafd">
-                    <ImgContainer>
-                        <Image src="https://free.vector6.com/wp-content/uploads/2021/03/freepng1423-hinh-ve-nhan-vat-co-gai-xinh-dep-quyen-ru-png-13.png" />
-                    </ImgContainer>
-                    <InfoContainer>
-                        <Title>SUMMER SALE</Title>
-                        <Desc>DONT'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS</Desc>
-                        <Button style={{ cursor: 'pointer' }} variant="outlined" color="secondary">
-                            SHOW NOW
-                        </Button>
-                    </InfoContainer>
-                </Slider>
-                <Slider bg="fcf1ed">
-                    <ImgContainer>
-                        <Image src="https://free.vector6.com/wp-content/uploads/2021/03/freepng1452-hinh-ve-nhan-vat-co-gai-xinh-dep-quyen-ru-png-42.png" />
-                    </ImgContainer>
-                    <InfoContainer>
-                        <Title>WINTER SALE</Title>
-                        <Desc>DONT'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS</Desc>
-                        <Button style={{ cursor: 'pointer' }} variant="outlined" color="secondary">
-                            SHOW NOW
-                        </Button>
-                    </InfoContainer>
-                </Slider>
-                <Slider bg="fbf0f4">
-                    <ImgContainer>
-                        <Image src="https://free.vector6.com/wp-content/uploads/2021/03/freepng1439-hinh-ve-nhan-vat-co-gai-xinh-dep-quyen-ru-png-29.png" />
-                    </ImgContainer>
-                    <InfoContainer>
-                        <Title>FLASH SALE</Title>
-                        <Desc>DONT'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS</Desc>
-                        <Button style={{ cursor: 'pointer' }} variant="outlined" color="secondary">
-                            SHOW NOW
-                        </Button>
-                    </InfoContainer>
-                </Slider>
-
+            <Wrapper slideIndex={slideIndex}>
+                {slideItems && slideItems.map((item, index) => (
+                    <Slider bg={item.bg} >
+                        <ImgContainer>
+                            <Image src={item.img} />
+                        </ImgContainer>
+                        <InfoContainer>
+                            <Title>{item.title}</Title>
+                            <Desc>{item.desc}</Desc>
+                            <Button style={{ cursor: 'pointer' }} variant="outlined" color="secondary">
+                                SHOW NOW
+                            </Button>
+                        </InfoContainer>
+                    </Slider>
+                ))
+                }
             </Wrapper>
             <Arrow direction="right" onClick={() => handleClick('right')}>
                 <ArrowRightOutlined ></ArrowRightOutlined>
