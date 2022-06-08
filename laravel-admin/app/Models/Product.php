@@ -13,7 +13,7 @@ class Product extends Model
     use SoftDeletes;
 
     protected $guarded = [];
-
+    protected $table = 'products';
     public function images()
     {
         return $this->hasMany(productImage::class, 'product_id');

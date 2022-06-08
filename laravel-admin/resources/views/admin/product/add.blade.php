@@ -243,7 +243,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Tải lên nhiều hình ảnh</label>
-                                <input type="file" name="Album_img[]" class="form-control-file form-control-sm" multiple>
+                                <input type="file" name="album_img[]" class="form-control-file form-control-sm" multiple>
 
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 trait storageImageTrait
@@ -10,7 +11,7 @@ trait storageImageTrait
             $file = $request->file($filedName);
             $fileNameOrigin  =$file->getClientOriginalName();
             $fileNameHash = Str::random('20').'.'.$file->getClientOriginalExtension();
-            $path = $request->file($filedName)->storeAs('public/'.$foderName,$fileNameHash);
+            $path = $file->storeAs('public/'.$foderName.'/'.Auth::id(),$fileNameHash);
 
             $dataUploadTrait =[
                 'file_name'=> $fileNameOrigin,
@@ -25,7 +26,7 @@ trait storageImageTrait
     public function storageTraitUploadMutiple($file,$foderName){
             $fileNameOrigin  =$file->getClientOriginalName();
             $fileNameHash = Str::random('20').'.'.$file->getClientOriginalExtension();
-            $path = $file->storeAs('public/'.$foderName,$fileNameHash);
+            $path = $file->storeAs('public/'.$foderName.'/'.Auth::id(),$fileNameHash);
             $dataUploadTrait =[
                 'file_name'=> $fileNameOrigin,
                 'file_path'=> Storage::url($path)

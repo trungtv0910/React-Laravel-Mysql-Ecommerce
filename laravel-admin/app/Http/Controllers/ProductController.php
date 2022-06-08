@@ -86,40 +86,39 @@ use DeleteModelTrait;
      */
     public function store(ProductAddRequest $request)
     {
+//        DB::beginTransaction();
+//        try {
 
-        DB::beginTransaction();
-
-        try {
             $dataInsert = [
                 'name' => $request->name,
                 'price' => $request->price,
                 'content' => $request->contents,
                 'discount' => $request->discount,
-                'user_id' => 1,
+                'user_id' => Auth::id(),
                 'desc' => $request->desc,
                 'status' => $request->status
             ];
 
-            echo '<pre>';
-            print_r($dataInsert);
-            echo '</pre>';
-
 
             /*
              * Upload One image
-             *  */
+             */
             $datalUploadFeatureImage = $this->storageTraitUpload($request, 'img', 'products_image');
             if (!empty($datalUploadFeatureImage)) {
                 $dataInsert['feature_image_name'] = $datalUploadFeatureImage['file_name'];
                 $dataInsert['feature_image_path'] = $datalUploadFeatureImage['file_path'];
             };
 
+
             $product = $this->product->create($dataInsert);
+
+
             /*
- * Upload multi image
- *  */
-            if ($request->hasFile('Album_img')) {
-                foreach ($request->Album_img as $fileItem) {
+             * Upload multi image
+             *  */
+
+            if ($request->hasFile('album_img')) {
+                foreach ($request->album_img as $fileItem) {
                     $dataProductImageDetail = $this->storageTraitUploadMutiple($fileItem, 'products_image');
                     if (!empty($dataProductImageDetail)) {
                         $product->images()->create([
@@ -131,8 +130,8 @@ use DeleteModelTrait;
             }
 
             /*
- * Handel many tags
- *  */
+             * Handel many tags
+             *  */
             if (!empty($request->tags)) {
 
                 foreach ($request->tags as $tagItem) {
@@ -148,13 +147,13 @@ use DeleteModelTrait;
         if(!empty($request->category_id)){
             $product->category_prod()->attach($request->category_id);
         }
-            DB::commit();
+//            DB::commit();
             // all good
             return  redirect()->route('product.list')->with('success', 'Thêm thành công');
-        } catch (\Exception $e) {
-            DB::rollback();
-            // something went wrong
-        }
+//        } catch (\Exception $e) {
+//            DB::rollback();
+//            // something went wrong
+//        }
 
 
     }

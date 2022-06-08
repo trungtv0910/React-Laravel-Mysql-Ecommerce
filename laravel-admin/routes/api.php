@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\v1\RegisterController;
+use App\Http\Controllers\Api\v1\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//api register
+Route::Post('register',[RegisterController::class,'register']);
+// api login -create Token
+Route::Post('login',[LoginController::class,'login']);
