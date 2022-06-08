@@ -126,6 +126,7 @@ const Footer = () => {
                     trungtv0910@gmail.com
                 </ContactItem>
                 <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+
             </Right>
         </Container>
     )
