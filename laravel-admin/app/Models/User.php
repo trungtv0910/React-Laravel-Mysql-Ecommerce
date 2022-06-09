@@ -10,11 +10,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
+//use Tymon\JWTAuth\Contracts\JWTSubject;
+
+
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -64,7 +68,22 @@ class User extends Authenticatable
 
     }
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
-
+    public function  todos() {
+        return $this->hasMany(Todo::class, 'created_by', 'id');
+    }
 }

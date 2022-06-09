@@ -64,6 +64,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete')->middleware(['auth','can:delete-role']);
         Route::post('/update/{id}', [RoleController::class, 'update'])->name('role.update');
     });
+    Route::prefix('test')->group(function () {
+        Route::get('/', function (){
+            return view('admin.test');
+        });
+
+    });
 });
 
 
