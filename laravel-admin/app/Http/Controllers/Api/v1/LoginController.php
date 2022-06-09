@@ -17,58 +17,59 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        if(!$request->email || !$request->password){
+        if (!$request->email || !$request->password) {
             return response()->json([
-                'code'=>'400',
-                'message'=>'Missing Parameter',
+                'code' => '400',
+                'message' => 'Missing Parameter',
 
             ],
                 400);
-        }else{
+        } else {
             // Bước 1 xác thực user có trong databse hay chưa
-            $email =$request->email;
-            $password=$request->password;
-            if(Auth::attempt(['email'=>$email,'password'=>$password])){
+            $email = $request->email;
+            $password = $request->password;
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
                 // Tạo Token nhưng trước khi tạo mới phải check token đã tồn tại trong 30 ngày hay chưa?
 
 //                check token
-                $checkTokenExit = SessionUser::where('user_id',Auth::id())->first();
-                if(empty($checkTokenExit)){
+                $checkTokenExit = SessionUser::where('user_id', Auth::id())->first();
+                if (empty($checkTokenExit)) {
+                    // Bước 2 Thêm token
                     $userSession = SessionUser::create([
-                        'token'=> Str::random(40),
-                        'refresh_token'=> Str::random(40),
-                        'token_expried'=> date('Y-m-d H:i:s', strtotime('+30 day')),
-                        'refresh_token_expried'=> date('Y-m-d H:i:s', strtotime('+360 day')),
-                        'user_id'=>Auth::id()
+                        'token' => Str::random(40),
+                        'refresh_token' => Str::random(40),
+                        'token_expried' => date('Y-m-d H:i:s', strtotime('+30 day')),
+                        'refresh_token_expried' => date('Y-m-d H:i:s', strtotime('+360 day')),
+                        'user_id' => Auth::id()
                     ]);
-                }else{
+                } else {
                     $userSession = $checkTokenExit;
                 }
 
-                if($userSession){
+                if ($userSession) {
                     return response()->json([
-                        'code'=>'200',
-                        'message'=>'Login Success',
-                        'data'=>$userSession,
-                        'data_user'=>Auth::user()
+                        'code' => '200',
+                        'message' => 'Login Success',
+                        'data' => $userSession,
+                        'data_user' => Auth::user()
                     ],
                         200);
-                }else{
+                } else {
                     return response()->json([
-                        'code'=>'500',
-                        'message'=>'Internall Server Error'
+                        'code' => '500',
+                        'message' => 'Internall Server Error'
                     ],
                         500);
                 }
 
-            }else{
+            } else {
                 return response()->json([
-                    'code'=>'401',
-                    'message'=>'User name Not Found'
+                    'code' => '401',
+                    'message' => 'User name Not Found'
                 ],
                     401);
             }
-// Bước 2 Thêm token
+
 
         }
 
@@ -77,18 +78,47 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function refreshToken(Request $request)
     {
-        //
+        $token = $request->header('token');
+        $checkTokenIsValid = SessionUser::where('token', $token)->first();
+
+
+        if (!empty($checkTokenIsValid)) {
+            if (strtotime($checkTokenIsValid->token_expried) < time()) {
+                $checkTokenIsValid->update([
+                    'token' => Str::random(40),
+                    'refresh_token' => Str::random(40),
+                    'token_expried' => date('Y-m-d H:i:s', strtotime('+30 day')),
+                    'refresh_token_expried' => date('Y-m-d H:i:s', strtotime('+360 day')),
+
+                ]);
+
+                $dataSession = SessionUser::find($checkTokenIsValid->id);
+                return response()->json([
+                    'code' => '200',
+                    'message' => 'Refresh token success',
+                    'data' => $dataSession
+                ],
+                    200);
+            }
+        }else{
+            return response()->json([
+                'code' => '401',
+                'message' => 'token not found',
+            ],
+                401);
+        }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -99,8 +129,8 @@ class LoginController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -111,11 +141,28 @@ class LoginController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteToken(Request $request)
     {
-        //
+        $token = $request->header('token');
+        $checkTokenIsValid = SessionUser::where('token', $token)->first();
+        if (!empty($checkTokenIsValid)) {
+            if($checkTokenIsValid->delete()){
+                return response()->json([
+                    'code' => '200',
+                    'message' => 'delete token success',
+                ],
+                    200);
+            }
+
+        }else{
+            return response()->json([
+                'code' => '401',
+                'message' => 'token not found',
+            ],
+                401);
+        }
     }
 }
