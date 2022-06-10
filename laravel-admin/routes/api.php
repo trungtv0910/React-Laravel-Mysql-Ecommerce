@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\v1\LoginController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\TodoController;
+use App\Http\Controllers\Api\v2\ProductController as V2ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,11 +55,24 @@ use App\Http\Controllers\Api\v1\TodoController;
 //    Route::resource('todos', 'TodoController');
 //});
 //--------------------------------------------------------------------------------------
+//public route
+
 
 Route::post('register', [\App\Http\Controllers\Api\v2\AuthController::class, 'register']);
 Route::post('login', [\App\Http\Controllers\Api\v2\AuthController::class, 'login']);
+Route::get('/products', [V2ProductController::class, 'index']);
+Route::get('/products/{id}', [V2ProductController::class, 'show']);
+Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
+
+
+
+
+//Protected route
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/products', [V2ProductController::class, 'store']);
+    Route::put('/products/{id}', [V2ProductController::class, 'update']);
+    Route::delete('/products/{id}', [V2ProductController::class, 'destroy']);
     Route::get('user', [\App\Http\Controllers\Api\v2\AuthController::class, 'user']);
     Route::post('logout', [\App\Http\Controllers\Api\v2\AuthController::class, 'logout']);
 });

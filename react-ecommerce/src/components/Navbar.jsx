@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { mobile } from '../responsive';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     height:60px;
@@ -66,6 +67,16 @@ margin-left:25px;
 ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
+
+
 const Navbar = () => {
     return (
         <Container>
@@ -78,21 +89,31 @@ const Navbar = () => {
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo>WECO</Logo>
+
+                    <StyledLink to="/" >
+                        <Logo>WECO</Logo>
+                    </StyledLink>
+
+
+
+
                 </Center>
                 <Right>
-                    <MenuItem>REGISTER</MenuItem>
-                    <MenuItem>SIGN IN</MenuItem>
+                    <StyledLink to="/register">
+                        <MenuItem>REGISTER</MenuItem>
+                    </StyledLink>
+                    <StyledLink to="/login" > <MenuItem>SIGN IN</MenuItem></StyledLink>
 
-                    <MenuItem>
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlinedIcon />
-                        </Badge>
-                    </MenuItem>
-
+                    <StyledLink to="/cart" >
+                        <MenuItem>
+                            <Badge badgeContent={4} color="primary">
+                                <ShoppingCartOutlinedIcon />
+                            </Badge>
+                        </MenuItem>
+                    </StyledLink>
                 </Right>
-            </Warapper>
-        </Container>
+            </Warapper >
+        </Container >
     )
 }
 

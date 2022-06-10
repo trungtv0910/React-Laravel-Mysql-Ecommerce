@@ -17,36 +17,36 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
-//LOGIN WITH DIS
+    //LOGIN WITH DIS
 
-//    public function login(Request $request)
-//    {
-//        if (!Auth::attempt($request->only('email', 'password'))) {
-//            return response([
-//                'message' => 'Invalid credentials!'
-//            ], 400);
-//        }
-//
-//        $user = Auth::user();
-//
-//        $token = $user->createToken('token')->plainTextToken;
-//
-//
-//
-//        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
-//
-//        return response([
-//            'message' => $token
-//        ])->withCookie($cookie);
-//    }
-
-
+    //    public function login(Request $request)
+    //    {
+    //        if (!Auth::attempt($request->only('email', 'password'))) {
+    //            return response([
+    //                'message' => 'Invalid credentials!'
+    //            ], 400);
+    //        }
+    //
+    //        $user = Auth::user();
+    //
+    //        $token = $user->createToken('token')->plainTextToken;
+    //
+    //
+    //
+    //        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
+    //
+    //        return response([
+    //            'message' => $token
+    //        ])->withCookie($cookie);
+    //    }
 
 
 
-// END LOGIN
+
+
+    // END LOGIN
 
 
     /**
@@ -56,22 +56,22 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'email'=>'required|email',
-            'password'=>'required|string|min:6'
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6'
         ]);
-        if($validator->fails()){
-            return response()->json($validator->errors(),400);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
         }
-        $token_validity = 24* 60;
+        $token_validity = 24 * 60;
         $this->guard()->factory()->setTTL($token_validity);
-        if (! $token = $this->guard()->attempt($validator->validate())) {
+        if (!$token = $this->guard()->attempt($validator->validate())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
     }
-/*
+    /*
  * REGISTER
  *
  */
@@ -98,10 +98,7 @@ class AuthController extends Controller
             )
         );
 
-        return response()->json(['message' => 'User created successfully', 'user' => $user],200);
-
-
-
+        return response()->json(['message' => 'User created successfully', 'user' => $user], 200);
     }
 
 
@@ -120,8 +117,7 @@ class AuthController extends Controller
     public function profile()
     {
         return response()->json($this->guard()->user());
-
-    }//end profile()
+    } //end profile()
 
     /**
      * Log the user out (Invalidate the token).
@@ -163,8 +159,7 @@ class AuthController extends Controller
     protected function guard()
     {
         return Auth::guard();
-
-    }//end guard()
+    } //end guard()
 
 
 

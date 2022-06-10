@@ -1,6 +1,7 @@
+import React, { SyntheticEvent, useState } from 'react';
 import styled from "styled-components"
 import { mobile } from "../responsive"
-
+import { login } from '../redux/apiCall';
 const Container = styled.div`
    width: 100vw;
     height: 100vh;
@@ -56,18 +57,35 @@ cursor: pointer;
 
 `
 
+
+
+
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState("");
+    // const dispatch = useDispatch();
+    // const { isFetching, error } = useSelector((state) => state.user);
+
+
+    const submit = async (e) => {
+        e.preventDefault();
+
+        // LOGIN
+        let response = await login({ email, password });
+        console.log(response);
+
+    }
     return (
         <Container>
             <Wrapper >
                 <Title >SIGN IN</Title>
-                <Form>
+                <Form onSubmit={submit}>
 
-                    <Input placeholder="username" />
-                    <Input placeholder="email" />
-                    <Input placeholder="password" />
+                    {/* <Input placeholder="username"  /> */}
+                    <Input placeholder="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                    <Button>LOGIN</Button>
+                    <Button  >LOGIN</Button>
                     <Link>DO NOT REMEMBER THE PASSWORD?</Link>
                     <Link>CREATE A NEW ACCOUNT</Link>
                 </Form>
