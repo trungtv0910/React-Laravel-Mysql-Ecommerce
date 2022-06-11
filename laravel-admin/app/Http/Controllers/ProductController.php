@@ -16,6 +16,7 @@ use App\Http\Requests\ProductAddRequest;
 use App\Http\Requests\ProductEditRequest;
 use App\Traits\DeleteModelTrait;
 
+
 class ProductController extends Controller
 {
     /**
@@ -29,7 +30,8 @@ class ProductController extends Controller
     private $tag;
 
     use storageImageTrait;
-use DeleteModelTrait;
+    use DeleteModelTrait;
+
     public function __construct(Product $product, Category $category, ProductImage $productImage, Tag $tag)
     {
         $this->product = $product;
@@ -84,72 +86,78 @@ use DeleteModelTrait;
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductAddRequest $request)
+//ProductAddRequest
+    public function store(Request $request)
     {
 //        DB::beginTransaction();
 //        try {
 
-            $dataInsert = [
-                'name' => $request->name,
-                'price' => $request->price,
-                'content' => $request->contents,
-                'discount' => $request->discount,
-                'user_id' => Auth::id(),
-                'desc' => $request->desc,
-                'status' => $request->status
-            ];
+        $dataInsert = [
+            'name' => $request->name,
+            'price' => $request->price,
+            'content' => $request->contents,
+            'discount' => $request->discount,
+            'user_id' => Auth::id(),
+            'desc' => $request->desc,
+            'status' => $request->status
+        ];
+        if (!empty($request->colors)) {
+            $dataInsert['color'] = json_encode($request->colors);
+        }
+        if (!empty($request->sizes)) {
+            $dataInsert['size'] = json_encode($request->sizes);
+        }
+
+        /*
+         * Upload One image
+         */
+        $datalUploadFeatureImage = $this->storageTraitUpload($request, 'img', 'products_image');
+        if (!empty($datalUploadFeatureImage)) {
+            $dataInsert['feature_image_name'] = $datalUploadFeatureImage['file_name'];
+            $dataInsert['feature_image_path'] = $datalUploadFeatureImage['file_path'];
+        };
 
 
-            /*
-             * Upload One image
-             */
-            $datalUploadFeatureImage = $this->storageTraitUpload($request, 'img', 'products_image');
-            if (!empty($datalUploadFeatureImage)) {
-                $dataInsert['feature_image_name'] = $datalUploadFeatureImage['file_name'];
-                $dataInsert['feature_image_path'] = $datalUploadFeatureImage['file_path'];
-            };
+        $product = $this->product->create($dataInsert);
 
 
-            $product = $this->product->create($dataInsert);
+        /*
+         * Upload multi image
+         *  */
 
-
-            /*
-             * Upload multi image
-             *  */
-
-            if ($request->hasFile('album_img')) {
-                foreach ($request->album_img as $fileItem) {
-                    $dataProductImageDetail = $this->storageTraitUploadMutiple($fileItem, 'products_image');
-                    if (!empty($dataProductImageDetail)) {
-                        $product->images()->create([
-                            'image_name' => $dataProductImageDetail['file_name'],
-                            'image_path' => $dataProductImageDetail['file_path'],
-                        ]);
-                    }
-                }
-            }
-
-            /*
-             * Handel many tags
-             *  */
-            if (!empty($request->tags)) {
-
-                foreach ($request->tags as $tagItem) {
-                    echo ' Tag=' . $tagItem;
-                    $tagInstance = $this->tag->firstOrCreate([
-                        'name' => $tagItem
+        if ($request->hasFile('album_img')) {
+            foreach ($request->album_img as $fileItem) {
+                $dataProductImageDetail = $this->storageTraitUploadMutiple($fileItem, 'products_image');
+                if (!empty($dataProductImageDetail)) {
+                    $product->images()->create([
+                        'image_name' => $dataProductImageDetail['file_name'],
+                        'image_path' => $dataProductImageDetail['file_path'],
                     ]);
-                    $tagId[] = $tagInstance->id;
                 }
-
-                $product->tags()->attach($tagId);
             }
-        if(!empty($request->category_id)){
+        }
+
+        /*
+         * Handel many tags
+         *  */
+        if (!empty($request->tags)) {
+
+            foreach ($request->tags as $tagItem) {
+                echo ' Tag=' . $tagItem;
+                $tagInstance = $this->tag->firstOrCreate([
+                    'name' => $tagItem
+                ]);
+                $tagId[] = $tagInstance->id;
+            }
+
+            $product->tags()->attach($tagId);
+        }
+        if (!empty($request->category_id)) {
             $product->category_prod()->attach($request->category_id);
         }
 //            DB::commit();
-            // all good
-            return  redirect()->route('product.list')->with('success', 'Thêm thành công');
+        // all good
+        return redirect()->route('product.list')->with('success', 'Thêm thành công');
 //        } catch (\Exception $e) {
 //            DB::rollback();
 //            // something went wrong
@@ -185,11 +193,10 @@ use DeleteModelTrait;
         $productOld = $this->product->find($id);
         $htmlOption = $this->getCategory($productOld->select_cate);
         $cateOfProduct = $productOld->select_cate;
-        $listCate = $this->category->where('parent_id',0)->get();
+        $listCate = $this->category->where('parent_id', 0)->get();
 
 
-
-        return view('admin.product.edit')->with(compact('htmlOption','dataPages','productOld','listCate','cateOfProduct'));
+        return view('admin.product.edit')->with(compact('htmlOption', 'dataPages', 'productOld', 'listCate', 'cateOfProduct'));
     }
 
     /**
@@ -213,9 +220,12 @@ use DeleteModelTrait;
                 'desc' => $request->desc,
                 'status' => $request->status
             ];
-
-
-
+            if (!empty($request->colors)) {
+                $dataUpdate['color'] = json_encode($request->colors);
+            }
+            if (!empty($request->sizes)) {
+                $dataUpdate['size'] = json_encode($request->sizes);
+            }
 
             /*
              * Upload One image
@@ -226,17 +236,16 @@ use DeleteModelTrait;
                 $dataUpdate['feature_image_path'] = $datalUploadFeatureImage['file_path'];
             };
 
-             $this->product->find($id)->Update($dataUpdate);
+            $this->product->find($id)->Update($dataUpdate);
 // update nó sẽ trả về giá trị true false
             $product = $this->product->find($id);
-
 
 
             /*
  * Upload multi image
  *  */
             if ($request->hasFile('Album_img')) {
-                $this->product_image->where('product_id',$id)->delete();
+                $this->product_image->where('product_id', $id)->delete();
                 foreach ($request->Album_img as $fileItem) {
                     $dataProductImageDetail = $this->storageTraitUploadMutiple($fileItem, 'products_image');
                     if (!empty($dataProductImageDetail)) {
@@ -263,18 +272,18 @@ use DeleteModelTrait;
 
                 $product->tags()->sync($tagId);
             }
-            if(!empty($request->category_id)){
+            if (!empty($request->category_id)) {
                 $product->category_prod()->sync($request->category_id);
             }
 
             DB::commit();
             // all good
 
-            return  redirect()->route('product.list')->with('success', 'Cập nhập thành công');
+            return redirect()->route('product.list')->with('success', 'Cập nhập thành công');
         } catch (\Exception $e) {
             DB::rollback();
             // something went wrong
-            return  redirect()->route('product.list')->with('error', 'Cập nhập không thành công');
+            return redirect()->route('product.list')->with('error', 'Cập nhập không thành công');
         }
 
 
@@ -288,6 +297,6 @@ use DeleteModelTrait;
      */
     public function destroy($id)
     {
-       return $this->deleteModelTrait($id,$this->product);
+        return $this->deleteModelTrait($id, $this->product);
     }
 }

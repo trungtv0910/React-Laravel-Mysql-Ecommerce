@@ -10,7 +10,8 @@
             margin: 5px;
 
         }
-        .album_img{
+
+        .album_img {
             display: flex;
             flex-wrap: wrap;
         }
@@ -25,7 +26,14 @@
                 tags: true,
                 tokenSeparators: [',']
             })
-
+            $(".sizes").select2({
+                tags: true,
+                tokenSeparators: [',']
+            })
+            $(".colors").select2({
+                tags: true,
+                tokenSeparators: [',']
+            })
             $(".handle_categories").select2({
                 tags: true,
                 tokenSeparators: [',']
@@ -155,13 +163,41 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Kích Thước</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control">
+                                                {{--                                                <input type="text" class="form-control">--}}
+                                                <select class="form-control sizes" multiple="multiple" name="sizes[]">
+                                                    @if(!empty($productOld->size) && json_decode($productOld->size))
+                                                        @foreach(json_decode($productOld->size) as $sizeItem)
+                                                            <option value="{{$sizeItem}}"
+                                                                    selected>{{$sizeItem}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                    <option value="XS">XS</option>
+                                                    <option value="S">S</option>
+                                                    <option value="M">M</option>
+                                                    <option value="L">L</option>
+                                                    <option value="XL">XL</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Màu Sắc</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control">
+                                                {{--                                                <input type="text" class="form-control">--}}
+
+                                                <select class="form-control colors" multiple="multiple" name="colors[]">
+                                                    @if(!empty($productOld->color) && json_decode($productOld->color))
+                                                        @foreach(json_decode($productOld->color) as $colorItem)
+                                                            <option value="{{$colorItem}}"
+                                                                    selected>{{$colorItem}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                    <option value="Red">Red</option>
+                                                    <option value="Green">Green</option>
+                                                    <option value="Blue">Blue</option>
+                                                    <option value="While">While</option>
+                                                    <option value="Yellow">Yellow</option>
+                                                        <option value="Black">Black</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -216,14 +252,16 @@
                             <div class="card-body">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input"  value="1" name="status" {{($productOld->status ==1)?'checked':'' }}>
+                                        <input type="checkbox" class="form-check-input" value="1"
+                                               name="status" {{($productOld->status ==1)?'checked':'' }}>
 
                                         Công khai
                                         <i class="input-helper"></i></label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" value="0" name="status" {{($productOld->status !=1)?'checked':'' }}> Chờ
+                                        <input type="checkbox" class="form-check-input" value="0"
+                                               name="status" {{($productOld->status !=1)?'checked':'' }}> Chờ
                                         duyệt <i
                                             class="input-helper"></i></label>
                                 </div>
@@ -262,9 +300,10 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <ul class="album_img" style="display: flex; list-style: none ; padding: 0px"  >
+                                    <ul class="album_img" style="display: flex; list-style: none ; padding: 0px">
                                         @foreach($productOld->images as $imageItem )
-                                        <li class="item"> <img src="{{asset($imageItem->image_path)}}"  width="100%" alt=""></li>
+                                            <li class="item"><img src="{{asset($imageItem->image_path)}}" width="100%"
+                                                                  alt=""></li>
 
                                         @endforeach
                                     </ul>
@@ -287,9 +326,10 @@
                                 <div class="form-group ">
                                     <label>Thêm thẻ tag</label>
                                     <select class="form-control tags" multiple="multiple" name="tags[]">
-                                            @foreach($productOld->tags as $tagItem)
-                                            <option value="{{$tagItem->id}}" selected="selected">{{$tagItem->name}}</option>
-                                            @endforeach
+                                        @foreach($productOld->tags as $tagItem)
+                                            <option value="{{$tagItem->id}}"
+                                                    selected="selected">{{$tagItem->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

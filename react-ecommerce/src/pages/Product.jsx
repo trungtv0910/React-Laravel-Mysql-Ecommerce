@@ -6,7 +6,9 @@ import Navbar from "../components/Navbar"
 import Newsletter from "../components/Newsletter"
 import { mobile } from "../responsive"
 
-const Container = styled.div``
+const Container = styled.div`
+height: 100vh;
+`
 const Wrapper = styled.div`
 display:flex;
 padding: 50px;
@@ -151,7 +153,7 @@ const Product = () => {
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>
-            <Newsletter />
+            {/* <Newsletter /> */}
             <Footer />
 
         </Container>

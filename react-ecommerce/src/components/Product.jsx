@@ -117,7 +117,8 @@ const Product = ({ item }) => {
               <ShoppingCartOutlined />
             </Icon>
             <Icon>
-              <StyledLink to={`/product/${item.id}`} >
+              {/* <StyledLink to={`/product/${item.id}`} > */}
+              <StyledLink to={'/product/' + item.id} >
                 <SearchOutlined />
               </StyledLink>
             </Icon>
@@ -128,7 +129,7 @@ const Product = ({ item }) => {
         </Warapper>
         <InfoProduct>
           <Title>{item.name}</Title>
-          <Price>{item.price}đ <del>390.000d</del> </Price>
+          <Price>{!item.discount ? item.price : item.discount}đ <del>{item.discount ? item.price + 'đ' : ''}</del> </Price>
         </InfoProduct>
       </Container>
 

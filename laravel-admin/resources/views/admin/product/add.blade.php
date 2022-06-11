@@ -15,6 +15,14 @@
                 tags: true,
                 tokenSeparators: [',']
             })
+            $(".sizes").select2({
+                tags: true,
+                tokenSeparators: [',']
+            })
+            $(".colors").select2({
+                tags: true,
+                tokenSeparators: [',']
+            })
 
             $(".handle_categories").select2({
                 tags: true,
@@ -63,7 +71,7 @@
 
             @endif
         </div>
-        <form class="forms-sample" method="POST" action="{{route('product.store')}}"  enctype="multipart/form-data">
+        <form class="forms-sample" method="POST" action="{{route('product.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-9 grid-margin ">
@@ -90,8 +98,9 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <textarea name="contents" id="editor1" rows="10" cols="80" @error('contents') is-invalid @enderror">
-                                    {{old('contents')}}
+                                <textarea name="contents" id="editor1" rows="10" cols="80"
+                                          @error('contents') is-invalid @enderror">
+                                {{old('contents')}}
                                 </textarea>
 
                                 @error('contents')
@@ -115,7 +124,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Giá Gốc</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="price" @error('price') is-invalid @enderror">
+                                            <input type="text" class="form-control" name="price"
+                                                   @error('price') is-invalid @enderror">
                                             @error('price')
                                             <span style="color: red;font-style: italic"> {{$message}}</span>
                                             @enderror
@@ -127,7 +137,7 @@
                                             <input type="text" class="form-control" name="discount">
                                         </div>
                                     </div>
-{{--                                    end form group--}}
+                                    {{--                                    end form group--}}
                                 </div>
                                 <div class="col">
                                     <div class="form-group row">
@@ -139,13 +149,28 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Kích Thước</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control">
+                                            {{--                                            <input type="text" class="form-control">--}}
+                                            <select class="form-control sizes" multiple="multiple" name="sizes[]">
+                                                <option value="XS">XS</option>
+                                                <option value="S">S</option>
+                                                <option value="M">M</option>
+                                                <option value="L">L</option>
+                                                <option value="XL">XL</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Màu Sắc</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control">
+{{--                                            <input type="text" class="form-control">--}}
+                                            <select class="form-control colors" multiple="multiple" name="colors[]">
+                                                <option value="Red">Red</option>
+                                                <option value="Green">Green</option>
+                                                <option value="Blue">Blue</option>
+                                                <option value="While">While</option>
+                                                <option value="Yellow">Yellow</option>
+                                                <option value="Black">Black</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -200,12 +225,14 @@
                         <div class="card-body">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" checked value="1" name="status"> Công khai
+                                    <input type="checkbox" class="form-check-input" checked value="1" name="status">
+                                    Công khai
                                     <i class="input-helper"></i></label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" value="0" name="status"> Chờ duyệt <i
+                                    <input type="checkbox" class="form-check-input" value="0" name="status"> Chờ duyệt
+                                    <i
                                         class="input-helper"></i></label>
                             </div>
 
@@ -243,7 +270,8 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Tải lên nhiều hình ảnh</label>
-                                <input type="file" name="album_img[]" class="form-control-file form-control-sm" multiple>
+                                <input type="file" name="album_img[]" class="form-control-file form-control-sm"
+                                       multiple>
 
                             </div>
                         </div>
