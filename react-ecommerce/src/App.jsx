@@ -7,7 +7,7 @@ import Register from "./pages/Register";
 import { BrowserRouter as Router, Navigate, Redirect, Route, Routes } from 'react-router-dom';
 import { publicRequest } from "./requestMethods";
 import { useEffect } from "react";
-import { login, user } from "./redux/apiCall";
+import { login } from "./redux/apiCall";
 
 
 
@@ -17,19 +17,19 @@ import { login, user } from "./redux/apiCall";
 
 
 const App = () => {
-  useEffect(() => {
-    getUser();
-  }, []);
-  const getUser = async () => {
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+  // const getUser = async () => {
 
-    // let res = await user();
-    let loginFE = await login({ email: 'daica@gmail.com', password: 'Vantrung1' });
-    console.log('login:', loginFE);
-    let userFE = await user();
-    console.log('infoOf', userFE);
-  }
+  //   // let res = await user();
+  //   let loginFE = await login({ email: 'daica@gmail.com', password: 'Vantrung1' });
+  //   console.log('login:', loginFE);
+  //   let userFE = await user();
+  //   console.log('infoOf', userFE);
+  // }
 
-
+  const user = false;
   return (
 
     // <ProductList />

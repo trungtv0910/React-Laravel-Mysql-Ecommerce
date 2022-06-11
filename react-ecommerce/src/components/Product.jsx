@@ -4,6 +4,7 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
 const Info = styled.div`
@@ -96,21 +97,29 @@ const Title = styled.h2`
 const Price = styled.p`
   .del{color:red}
 `
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
 const Product = ({ item }) => {
   return (
     <>
       <Container>
         <Warapper>
           {/* <Circle /> */}
-          <Image src={item.img} />
+          <Image src={'http://localhost:8000' + item.feature_image_path} />
           <Info>
             <Icon>
               <ShoppingCartOutlined />
             </Icon>
             <Icon>
-
-              <SearchOutlined />
-
+              <StyledLink to={`/product/${item.id}`} >
+                <SearchOutlined />
+              </StyledLink>
             </Icon>
             <Icon>
               <FavoriteBorderOutlined />
@@ -118,7 +127,7 @@ const Product = ({ item }) => {
           </Info>
         </Warapper>
         <InfoProduct>
-          <Title>{item.title}</Title>
+          <Title>{item.name}</Title>
           <Price>{item.price}đ <del>390.000d</del> </Price>
         </InfoProduct>
       </Container>

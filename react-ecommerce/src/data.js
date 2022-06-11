@@ -26,16 +26,19 @@ export const categories = [
     {
         id: 1,
         img: "https://media.coolmate.me/cdn-cgi/image/width=450,height=663,quality=100/uploads/April2022/polo-anti-trang_76.jpg",
-        title: "SHIRT STYLE"
+        title: "SHIRT STYLE",
+        cat: "women"
     },
     {
         id: 2,
         img: "https://media.coolmate.me/cdn-cgi/image/width=450,height=663,quality=100/uploads/November2021/uBT5A9094_copy.jpg",
-        title: "LOUNGEWEAR LOVE"
+        title: "LOUNGEWEAR LOVE",
+        cat: "coat"
     }, {
         id: 3,
         img: "https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=80/uploads/April2022/26-01.jpg",
-        title: "LIGHT JACKETS"
+        title: "LIGHT JACKETS",
+        cat: "jeans"
     }
 ]
 

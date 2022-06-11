@@ -78,6 +78,7 @@ const StyledLink = styled(Link)`
 
 
 const Navbar = () => {
+    let user = true;
     return (
         <Container>
             <Warapper >
@@ -99,11 +100,15 @@ const Navbar = () => {
 
                 </Center>
                 <Right>
-                    <StyledLink to="/register">
-                        <MenuItem>REGISTER</MenuItem>
-                    </StyledLink>
-                    <StyledLink to="/login" > <MenuItem>SIGN IN</MenuItem></StyledLink>
-
+                    {user ? <>
+                        <StyledLink to="/register">
+                            <MenuItem>REGISTER</MenuItem>
+                        </StyledLink>
+                        <StyledLink to="/login" > <MenuItem>SIGN IN</MenuItem></StyledLink>
+                    </>
+                        :
+                        <a href="">Logout</a>
+                    }
                     <StyledLink to="/cart" >
                         <MenuItem>
                             <Badge badgeContent={4} color="primary">
