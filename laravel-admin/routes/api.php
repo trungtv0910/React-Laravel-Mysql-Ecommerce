@@ -61,7 +61,7 @@ use App\Http\Controllers\Api\v2\ProductController as V2ProductController;
 Route::post('register', [\App\Http\Controllers\Api\v2\AuthController::class, 'register']);
 Route::post('login', [\App\Http\Controllers\Api\v2\AuthController::class, 'login']);
 Route::get('/products', [V2ProductController::class, 'index']);
-Route::get('/products/{id}', [V2ProductController::class, 'show']);
+Route::get('/product/{id}', [V2ProductController::class, 'show']);
 Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
 

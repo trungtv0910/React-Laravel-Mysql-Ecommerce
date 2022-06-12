@@ -1,15 +1,19 @@
-import { Add, Remove } from "@material-ui/icons"
+import { Add, InvertColorsOffTwoTone, Remove } from "@material-ui/icons"
+import { useEffect, useState } from "react"
+import { Navigate, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import Announcement from "../components/Announcement"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Newsletter from "../components/Newsletter"
+import { getProductServer } from "../redux/apiProductCall"
 import { mobile } from "../responsive"
 
 const Container = styled.div`
 height: 100vh;
 `
 const Wrapper = styled.div`
+min-height: 100vh;
 display:flex;
 padding: 50px;
 ${mobile({ padding: "10px", flexDirection: "column" })}
@@ -111,45 +115,110 @@ const Button = styled.button`
     }
 `
 const Product = () => {
+    const location = useLocation();
+    const id = location.pathname.split('/')[2];
+    const [product, setProduct] = useState({});
+    //set list color and size form server
+    const [listColor, setlistColor] = useState([]);
+    const [listSize, setlistSize] = useState([]);
+
+    const [quantity, setquantity] = useState(1);
+    // set color and size while customer choose
+    const [color, setColor] = useState("");
+    const [size, setSize] = useState("");
+
+    useEffect(() => {
+        const getProductByid = async () => {
+            try {
+                const res = await getProductServer(id);
+
+                if (res && res.data.status === 200) {
+                    console.log(res.data);
+                    setProduct(res.data.data);
+
+                    let arrayColor = (res.data.data.color).replace(/'/g, '"');
+                    if (arrayColor) {
+                        setlistColor(JSON.parse(arrayColor));
+                    }
+                    let arraySize = (res.data.data.size).replace(/'/g, '"');
+                    if (arraySize) {
+                        setlistSize(JSON.parse(arraySize));
+                    }
+
+
+
+
+                    // console.log(typeof (listColor));
+                } else {
+                    console.log('Lỗi truy xuất sản phẩm id')
+                }
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+        getProductByid();
+
+    }, [id]);
+
+    const handleQuantity = (type) => {
+        if (type == "remove") {
+            quantity > 1 &&
+                setquantity(quantity - 1);
+        } else {
+            setquantity(quantity + 1);
+        }
+    }
+    const handleAddToCart = () => {
+        alert("Banj ddang mua")
+    }
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+                    <Image src={`http://localhost:8000${product.feature_image_path}`} />
                 </ImgContainer>
+
                 <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam cumque ullam assumenda reprehenderit porro dignissimos at nostrum expedita itaque nemo!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam cumque ullam assumenda
-                    </Desc>
-                    <Price>400.000 d</Price>
+                    <Title>{product.name}</Title>
+
+                    <Desc
+                        dangerouslySetInnerHTML={{
+                            __html: product.desc
+                        }}></Desc>
+
+                    <Price>{product.price} đ</Price>
+
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="gray" />
-                            <FilterColor color="red" />
-                            <FilterColor color="blue" />
+                            {
+                                listColor.map((itemColor) => (
+                                    <FilterColor key={itemColor} color={itemColor} onClick={() => setColor(itemColor)} />
+                                ))
+                            }
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
-                                <FilterSizeOption>XS</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
+                            <FilterSize onChange={(e) => setSize(e.target.value)} >
+                                {
+                                    listSize.map((itemSize) => (
+                                        <FilterSizeOption key={itemSize} value={itemSize} >{itemSize}</FilterSizeOption>
+                                    ))
+                                }
+
                             </FilterSize>
                         </Filter>
                     </FilterContainer>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove />
-                            <Amount>1</Amount>
-                            <Add />
+                            <Remove onClick={() => handleQuantity('remove')} style={{ cursor: "pointer" }} />
+                            <Amount>{quantity}</Amount>
+                            <Add onClick={() => handleQuantity('add')} style={{ cursor: "pointer" }} />
                         </AmountContainer>
-                        <Button>Add To Cart</Button>
+                        <Button onClick={handleAddToCart}>Add To Cart</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

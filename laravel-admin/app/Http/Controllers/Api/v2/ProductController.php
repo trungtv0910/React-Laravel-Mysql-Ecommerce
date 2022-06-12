@@ -49,7 +49,20 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::find($id);
+        $data = Product::find($id);
+        if ($data) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Get data product Success',
+                'data' => $data
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Get data product Error form Server',
+            ], 400);
+        }
+        // return Product::find($id);
     }
 
     /**

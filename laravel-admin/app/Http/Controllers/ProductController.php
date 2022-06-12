@@ -74,10 +74,8 @@ class ProductController extends Controller
     {
         $data = $this->category->all();
         $recusive = new Recusive($data);
-//        return $recusive->categoryRecusive($parent_id);
+        //        return $recusive->categoryRecusive($parent_id);
         return $recusive->categoryRecusiveCheckBox($product_id);
-
-
     }
 
     /**
@@ -86,11 +84,11 @@ class ProductController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-//ProductAddRequest
-    public function store(Request $request)
+    //ProductAddRequest
+    public function store(ProductAddRequest $request)
     {
-//        DB::beginTransaction();
-//        try {
+        //        DB::beginTransaction();
+        //        try {
 
         $dataInsert = [
             'name' => $request->name,
@@ -155,13 +153,13 @@ class ProductController extends Controller
         if (!empty($request->category_id)) {
             $product->category_prod()->attach($request->category_id);
         }
-//            DB::commit();
+        //            DB::commit();
         // all good
         return redirect()->route('product.list')->with('success', 'Thêm thành công');
-//        } catch (\Exception $e) {
-//            DB::rollback();
-//            // something went wrong
-//        }
+        //        } catch (\Exception $e) {
+        //            DB::rollback();
+        //            // something went wrong
+        //        }
 
 
     }
@@ -237,7 +235,7 @@ class ProductController extends Controller
             };
 
             $this->product->find($id)->Update($dataUpdate);
-// update nó sẽ trả về giá trị true false
+            // update nó sẽ trả về giá trị true false
             $product = $this->product->find($id);
 
 
@@ -285,8 +283,6 @@ class ProductController extends Controller
             // something went wrong
             return redirect()->route('product.list')->with('error', 'Cập nhập không thành công');
         }
-
-
     }
 
     /**
