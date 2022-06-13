@@ -111,7 +111,7 @@ const Product = ({ item }) => {
       <Container>
         <Warapper>
           {/* <Circle /> */}
-          <Image src={'http://localhost:8000' + item.feature_image_path} />
+          <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
           <Info>
             <Icon>
               <ShoppingCartOutlined />

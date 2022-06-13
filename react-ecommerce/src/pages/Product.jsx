@@ -1,5 +1,6 @@
 import { Add, InvertColorsOffTwoTone, Remove } from "@material-ui/icons"
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import Announcement from "../components/Announcement"
@@ -7,7 +8,9 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Newsletter from "../components/Newsletter"
 import { getProductServer } from "../redux/apiProductCall"
+import { addProduct } from "../redux/cartRedux"
 import { mobile } from "../responsive"
+
 
 const Container = styled.div`
 height: 100vh;
@@ -127,6 +130,8 @@ const Product = () => {
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const getProductByid = async () => {
             try {
@@ -170,7 +175,8 @@ const Product = () => {
         }
     }
     const handleAddToCart = () => {
-        alert("Banj ddang mua")
+        dispatch(addProduct({ ...product, quantity, color, size }))
+        // addProduct({ product, quantity })
     }
     return (
         <Container>
@@ -178,7 +184,7 @@ const Product = () => {
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    <Image src={`http://localhost:8000${product.feature_image_path}`} />
+                    <Image src={process.env.REACT_APP_BACKEND_URL + product.feature_image_path} />
                 </ImgContainer>
 
                 <InfoContainer>

@@ -6,6 +6,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
     height:60px;
@@ -78,6 +79,8 @@ const StyledLink = styled(Link)`
 
 
 const Navbar = () => {
+    const quantity = useSelector(state => state.cart.quantity);
+
     let user = true;
     return (
         <Container>
@@ -111,7 +114,7 @@ const Navbar = () => {
                     }
                     <StyledLink to="/cart" >
                         <MenuItem>
-                            <Badge badgeContent={4} color="primary">
+                            <Badge badgeContent={quantity > 0 ? quantity : 0} color="primary">
                                 <ShoppingCartOutlinedIcon />
                             </Badge>
                         </MenuItem>

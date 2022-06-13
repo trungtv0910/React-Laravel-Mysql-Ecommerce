@@ -1,11 +1,15 @@
 
 import { Add, Remove } from '@material-ui/icons'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { mobile } from '../responsive'
+import { useHistory } from "react-router-dom";
+
+
 
 const Container = styled.div`
     
@@ -155,7 +159,16 @@ transition: all 0.5s ease;
 
 
 
+
 const Cart = () => {
+    const cart = useSelector((state) => state.cart);
+    console.log(cart);
+    // const [stripeToken, setStripeToken] = useState(null);
+    // const history = useHistory();
+
+    // const onToken = (token) => {
+    //   setStripeToken(token);
+    // };
     return (
         <Container>
             <Announcement />
@@ -172,48 +185,30 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://cf.shopee.vn/file/6b57bb1827f921ab4ce8d6ef46d4f420" />
-                                <Details>
-                                    <ProductName> <b>Product:</b>JESSIE THUNDER SHOES</ProductName>
-                                    <ProductId> <b>ID:</b>948512324</ProductId>
-                                    <ProductColor color="black" />
-                                    <ProductSize> <b>size:</b>M</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
 
-                                </ProductAmountContainer>
-                                <ProductPrice> 200.000d</ProductPrice>
-                            </PriceDetail>
-                        </Product>
-                        <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://cf.shopee.vn/file/6b57bb1827f921ab4ce8d6ef46d4f420" />
-                                <Details>
-                                    <ProductName> <b>Product:</b>JESSIE THUNDER SHOES</ProductName>
-                                    <ProductId> <b>ID:</b>948512324</ProductId>
-                                    <ProductColor color="gray" />
-                                    <ProductSize> <b>size:</b>M</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
+                        {cart.products.map((item) => (
 
-                                </ProductAmountContainer>
-                                <ProductPrice> 200.000d</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                            <Product>
+                                <ProductDetail>
+                                    <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
+                                    <Details>
+                                        <ProductName> <b>Product:</b>{item.name}</ProductName>
+                                        <ProductId> <b>ID:</b>{item.id}</ProductId>
+                                        <ProductColor color={item.color ? item.color : "black"} />
+                                        <ProductSize> <b>size:</b>{item.size ? item.size : "Ngẫu nhiên"}</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add style={{ cursor: "pointer" }} />
+                                        <ProductAmount>{item.quantity}</ProductAmount>
+                                        <Remove style={{ cursor: "pointer" }} />
 
+                                    </ProductAmountContainer>
+                                    <ProductPrice> {item.quantity * item.price}đ</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
