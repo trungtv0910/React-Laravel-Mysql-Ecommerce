@@ -20,11 +20,12 @@ export const publicRequest = axios.create({
 
 
 
-// export const userRequest = axios.create({
-//     baseURL: BASE_URL,
-//     header: { token: `Bearer ${TOKEN}` },
-//     credentials: 'include',
-//     body: JSON.stringify({
-//         user
-//     })
-// });
+export const userRequest = axios.create({
+    baseURL: BASE_URL,
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Requseted-With': 'XMLHttpRequest',
+    },
+    withCredentials: true,
+});

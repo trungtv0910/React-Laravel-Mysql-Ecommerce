@@ -1,14 +1,17 @@
 
 import { Add, Remove } from '@material-ui/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { mobile } from '../responsive'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+// import StripeCheckout from "react-stripe-checkout";
 
+
+// const KEY = process.env.REACT_APP_STRIPE;
 
 
 const Container = styled.div`
@@ -115,6 +118,8 @@ const Hr = styled.hr`
    background-color :#eee ;
    border:none;
    height: 1px;
+   margin-top: 15px;
+   margin-bottom: 15px;
 
 `
 
@@ -162,13 +167,46 @@ transition: all 0.5s ease;
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
-    console.log(cart);
-    // const [stripeToken, setStripeToken] = useState(null);
-    // const history = useHistory();
+    const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate();
 
-    // const onToken = (token) => {
-    //   setStripeToken(token);
-    // };
+    const onToken = (token) => {
+        setStripeToken(token);
+    };
+
+    // useEffect(() => {
+    //     const makeRequest = async () => {
+    //         try {
+    //             //     const res = await userRequest.post("/checkout/payment", {
+    //             //         tokenId: stripeToken.id,
+    //             //         amount: 500,
+    //             //     });
+    //             //     history.push("/success", {
+    //             //         stripeData: res.data,
+    //             //         products: cart,
+    //             //     });
+    //         } catch { }
+    //     };
+    //     stripeToken && makeRequest();
+    // }, [stripeToken, cart.total, history]);
+
+    const handleCheckOut = () => {
+        let clientConfirm = confirm("Bạn Xác Nhận Thanh Toán?");
+        if (clientConfirm) {
+            // navigate("/success");
+            navigate("/success", {
+                state: {
+                    cart: cart,
+                    stripeData: "Trungdata"
+                },
+
+            });
+            // console.log('Cart =', cart);
+        }
+
+    }
+
+
     return (
         <Container>
             <Announcement />
@@ -188,8 +226,8 @@ const Cart = () => {
 
                         {cart.products.map((item) => (
 
-                            <Product>
-                                <ProductDetail>
+                            < Product key={item.id}>
+                                <ProductDetail >
                                     <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
                                     <Details>
                                         <ProductName> <b>Product:</b>{item.name}</ProductName>
@@ -208,13 +246,20 @@ const Cart = () => {
                                     <ProductPrice> {item.quantity * item.price}đ</ProductPrice>
                                 </PriceDetail>
                             </Product>
+
+
                         ))}
+                        <Hr />
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>200.000đ</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total}đ</SummaryItemPrice>
+                        </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>Estimated Shipping</SummaryItemText>
+                            <SummaryItemPrice>20.000đ</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Shinging Discount</SummaryItemText>
@@ -222,17 +267,27 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText >Total</SummaryItemText>
-                            <SummaryItemPrice>220.000đ</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total}đ</SummaryItemPrice>
                         </SummaryItem>
+                        {/* <StripeCheckout
+                            name="Weco Shop"
+                            image="https://avatars.githubusercontent.com/u/1486366?v=4"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is ${cart.total}`}
+                            amount={cart.total * 100}
+                            token={onToken}
+                            stripeKey={KEY}
+                        /> */}
 
-                        <SummaryButton >CHECKOUT NOW</SummaryButton >
+                        <SummaryButton onClick={handleCheckOut} >CHECKOUT NOW</SummaryButton >
 
 
                     </Summary>
                 </Bottom>
-            </Wrapper>
+            </Wrapper >
             <Footer />
-        </Container>
+        </Container >
     )
 }
 export default Cart

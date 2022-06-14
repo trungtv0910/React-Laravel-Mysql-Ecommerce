@@ -19,3 +19,8 @@ export const user = async () => {
     await publicRequest.get('/sanctum/csrf-cookie');
     return await publicRequest.get('/api/user', user);
 }
+
+export const AddCartServer = async () => {
+    await publicRequest.get('/sanctum/csrf-cookie');
+    return await publicRequest.get('/api/orders', user);
+}

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\v1\LoginController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\TodoController;
+use App\Http\Controllers\Api\v2\OrderController;
 use App\Http\Controllers\Api\v2\ProductController as V2ProductController;
 
 /*
@@ -65,7 +66,7 @@ Route::get('/product/{id}', [V2ProductController::class, 'show']);
 Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
 
-
+Route::post('/orders', [OrderController::class, 'store']);
 
 
 //Protected route

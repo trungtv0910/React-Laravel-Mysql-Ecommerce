@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
+import Success from "./pages/Success";
 import { BrowserRouter as Router, Navigate, Redirect, Route, Routes } from 'react-router-dom';
 import { publicRequest } from "./requestMethods";
 import { useEffect } from "react";
@@ -47,7 +48,7 @@ const App = () => {
         <Route path="/products/" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/success" element={<Product />} />
+        <Route path="/success" element={<Success />} />
 
         <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register />} />
