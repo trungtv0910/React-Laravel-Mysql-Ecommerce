@@ -51,7 +51,7 @@ const success = () => {
                 <div style={{ padding: 10 }}>
                     {orderId ? `Order has been created successfully. Your order number is ${orderId}` : `
                     
-Ordering ! The system is updating
+                        Ordering ! The system is updating
                     `}
                 </div>
 

@@ -80,8 +80,8 @@ const StyledLink = styled(Link)`
 
 const Navbar = () => {
     const quantity = useSelector(state => state.cart.quantity);
+    const user = useSelector(state => state.user.currentUser);
 
-    let user = true;
     return (
         <Container>
             <Warapper >
@@ -103,14 +103,17 @@ const Navbar = () => {
 
                 </Center>
                 <Right>
-                    {user ? <>
+                    {!user ? <>
                         <StyledLink to="/register">
                             <MenuItem>REGISTER</MenuItem>
                         </StyledLink>
                         <StyledLink to="/login" > <MenuItem>SIGN IN</MenuItem></StyledLink>
                     </>
                         :
-                        <a href="">Logout</a>
+                        <>
+                            <MenuItem>Tài khoản: {user.user.name}</MenuItem>
+                            <StyledLink to="/logout" > <MenuItem>LOGOUT</MenuItem></StyledLink>
+                        </>
                     }
                     <StyledLink to="/cart" >
                         <MenuItem>

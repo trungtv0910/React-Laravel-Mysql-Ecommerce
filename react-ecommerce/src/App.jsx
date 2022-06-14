@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Navigate, Redirect, Route, Routes } from 'reac
 import { publicRequest } from "./requestMethods";
 import { useEffect } from "react";
 import { login } from "./redux/apiCall";
+import { useSelector } from "react-redux";
+import Logout from "./pages/Logout";
 
 
 
@@ -30,7 +32,8 @@ const App = () => {
   //   console.log('infoOf', userFE);
   // }
 
-  const user = false;
+  const user = useSelector((state) => state.user.currentUser);
+  console.log('GERUSSER', user)
   return (
 
     // <ProductList />
@@ -52,7 +55,7 @@ const App = () => {
 
         <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
         <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register />} />
-
+        <Route path="/logout" element={user && <Logout />} />
 
 
       </Routes>

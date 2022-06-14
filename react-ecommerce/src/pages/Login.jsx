@@ -2,6 +2,7 @@ import React, { SyntheticEvent, useState } from 'react';
 import styled from "styled-components"
 import { mobile } from "../responsive"
 import { login } from '../redux/apiCall';
+import { useDispatch, useSelector } from 'react-redux';
 const Container = styled.div`
    width: 100vw;
     height: 100vh;
@@ -48,6 +49,10 @@ const Button = styled.button`
     &:hover {
         background-color: #023f3f;
     }
+    &:disabled{
+        color:green;
+        cursor: not-allowed;
+    }
 `
 const Link = styled.a`
 margin:5px 0px;
@@ -56,22 +61,24 @@ text-decoration: underline;
 cursor: pointer;
 
 `
-
+const Error = styled.div`
+    color:red;
+`
 
 
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
-    // const dispatch = useDispatch();
-    // const { isFetching, error } = useSelector((state) => state.user);
-
+    const dispatch = useDispatch();
+    const { isFetching, error } = useSelector((state) => state.user);
+    console.log(isFetching, ' error', error);
 
     const submit = async (e) => {
         e.preventDefault();
 
         // LOGIN
-        let response = await login({ email, password });
+        let response = await login(dispatch, { email, password });
         console.log(response);
 
     }
@@ -85,7 +92,8 @@ const Login = () => {
                     <Input placeholder="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <Input placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                    <Button  >LOGIN</Button>
+                    <Button disabled={isFetching} >LOGIN</Button>
+                    {error && <Error>Something went wrong...</Error>}
                     <Link>DO NOT REMEMBER THE PASSWORD?</Link>
                     <Link>CREATE A NEW ACCOUNT</Link>
                 </Form>
