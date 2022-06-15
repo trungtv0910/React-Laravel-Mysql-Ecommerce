@@ -1,4 +1,5 @@
-import { Add, InvertColorsOffTwoTone, Remove } from "@material-ui/icons"
+import { Add, InvertColorsOffTwoTone, Remove, RestoreSharp } from "@material-ui/icons"
+import { isFulfilled } from "@reduxjs/toolkit"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
@@ -7,9 +8,13 @@ import Announcement from "../components/Announcement"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Newsletter from "../components/Newsletter"
+import { addProductToCartServer, testCartServer } from "../redux/apiCart"
 import { getProductServer } from "../redux/apiProductCall"
 import { addProduct } from "../redux/cartRedux"
 import { mobile } from "../responsive"
+
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const Container = styled.div`
@@ -129,7 +134,7 @@ const Product = () => {
     // set color and size while customer choose
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
-
+    const [ADDTOCART, setADDTOCART] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -149,10 +154,6 @@ const Product = () => {
                     if (arraySize) {
                         setlistSize(JSON.parse(arraySize));
                     }
-
-
-
-
                     // console.log(typeof (listColor));
                 } else {
                     console.log('Lỗi truy xuất sản phẩm id')
@@ -174,10 +175,50 @@ const Product = () => {
             setquantity(quantity + 1);
         }
     }
-    const handleAddToCart = () => {
-        dispatch(addProduct({ ...product, quantity, color, size }))
-        // addProduct({ product, quantity })
+
+
+    const handleAddToCart = async () => {
+
+        try {
+            let res = await addProductToCartServer({ product, quantity, color, size });
+            console.log(res)
+            if (res && res.data.status === 200) {
+                console.log('success');
+                // toast.error('Lỗi');
+                // toast.success('The product has been added to Cart', {
+                //     position: "top-right",
+                //     autoClose: 5000,
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                // });
+            } else if (res && res.data.status === 401) {
+                console.log('authenticate');
+                // toast.error('You are not logged in', {
+                //     position: "top-right",
+                //     autoClose: 5000,
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                // });
+            } else if (res && res.data.status === 500) {
+                console.log('looix server');
+            } else {
+                console.log('looix chua biet ten')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+
+        // dispatch(addProduct({ ...product, quantity, color, size }))
     }
+
+
     return (
         <Container>
             <Navbar />
@@ -224,7 +265,7 @@ const Product = () => {
                             <Amount>{quantity}</Amount>
                             <Add onClick={() => handleQuantity('add')} style={{ cursor: "pointer" }} />
                         </AmountContainer>
-                        <Button onClick={handleAddToCart}>Add To Cart</Button>
+                        <Button onClick={() => handleAddToCart()}>Add To Cart</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

@@ -40,10 +40,13 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password'))
         ]);
         $token = $user->createToken($user->email . '_token')->plainTextToken;
+        $dataUser = [
+            "name" => $request->input('name'),
+            "email" => $request->input('email')
+        ];
         return response()->json([
             'status' => 200,
-            'username' => $request->input('name'),
-            'email' => $request->input('email'),
+            'user' => $dataUser,
             'token' => $token,
             'message' => 'Registered Successfully'
 
@@ -52,34 +55,65 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response([
-                'message' => 'Invalid credentials!'
-            ], Response::HTTP_UNAUTHORIZED);
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        } else {
+            $user = User::Where('email', $request->email)->first();
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response([
+                    'status' => 401,
+                    'message' => 'Invalid Credentials, SAI!'
+                ], 401);
+            } else {
+                $token = $user->createToken($user->email . '_token')->plainTextToken;
+                return response()->json([
+                    'status' => 200,
+                    'user' => $user,
+                    'token' => $token,
+                    'message' => 'Logged In Successfully',
+                ], 200);
+            }
         }
 
+        //--------------------------------------------------------------------------------
+
+        // if (!Auth::attempt($request->only('email', 'password'))) {
+        //     return response([
+        //         'message' => 'Invalid credentials!'
+        //     ], Response::HTTP_UNAUTHORIZED);
+        // }
         /*
-check email
-$user  = User::where('email'.$fields['email'])->first();
-check password
-if(!user || ! Hash::check($field['password'],$user->password)){
-    return response([
-        'message'=>'Bad creds'
-    ],401);
-}
-*/
+        check email
+        $user  = User::where('email'.$fields['email'])->first();
+        check password
+        if(!user || ! Hash::check($field['password'],$user->password)){
+            return response([
+                'message'=>'Bad creds'
+            ],401);
+        }
+        */
+        // $user = Auth::user();
 
+        // $token = $user->createToken('token')->plainTextToken;
 
-        $user = Auth::user();
+        // $cookie = cookie('jwt', $token, 60 * 24); // 1 day
 
-        $token = $user->createToken('token')->plainTextToken;
-
-        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
-
-        return response([
-            'user' => $user,
-            'token' => $token
-        ])->withCookie($cookie);
+        // return response([
+        //     'status' => 200,
+        //     'user' => $user,
+        //     'token' => $token
+        // ], 200)->withCookie($cookie);
+        //------------------------------------------------------
+        // return response([
+        //     'status' => 200,
+        //     'user' => $user,
+        //     'token' => $token
+        // ], 200);
     }
 
 
@@ -89,13 +123,24 @@ if(!user || ! Hash::check($field['password'],$user->password)){
         return Auth::user();
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         // Auth::user()->tokens()->delete();
-        $cookie = Cookie::forget('jwt');
+        // $cookie = Cookie::forget('jwt');
+        // $request->user()->currentAccessToken()->delete();
+        // auth()->user()->tokens()->delete();
+        // return response([
+        //     'status' => 200,
+        //     'message' => 'Success',
+        //     'user' => Auth::user(),
+        //     'token' => null,
+        // ], 200)->withCookie($cookie);
+        auth()->user()->tokens()->delete();
 
-        return response([
-            'message' => 'Success'
-        ])->withCookie($cookie);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Login Success',
+            'user' => 'cxxc',
+        ], 200);
     }
 }

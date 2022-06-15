@@ -17,6 +17,7 @@ import Logout from "./pages/Logout";
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 // axios.defaults.headers.post['Accept'] = 'application/json';
 // publicRequest.defaults.withCredentials = true;
+// Set the AUTH token for any request
 
 
 const App = () => {

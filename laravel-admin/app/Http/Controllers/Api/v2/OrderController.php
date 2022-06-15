@@ -27,7 +27,6 @@ class OrderController extends Controller
                         'attributes' => "Color:" . $item['color'] . " Size:" . $item['size']
                     ]);
                 }
-
             }
 
             DB::commit();
@@ -35,9 +34,8 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => "Order add to database success",
-                'id'=>$order->id
+                'id' => $order->id
             ], 200);
-
         } catch (\Exception $e) {
             DB::rollback();
             // something went wrong

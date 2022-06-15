@@ -48,24 +48,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function roles(){
-        return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
-    public function checkPermissionAccess($permissionCheck){
+    public function checkPermissionAccess($permissionCheck)
+    {
         //Bước 1: lấy tất cả các quyền của user đang login trong hệ thông
         $roles = Auth::user()->roles;
-        foreach ($roles as $role){
+        foreach ($roles as $role) {
 
             $permissions = $role->permissionRole;
             // bước 2 so sánh giá trị đưa vào của route hiên tại xem có tồn tại trong các quyền ầy hay không ?
             // tiến hành so sánh sử dụng phương thức helper
-            if($permissions->contains('key_code',$permissionCheck)){
+            if ($permissions->contains('key_code', $permissionCheck)) {
                 return true;
             }
         }
         return false;
-
     }
 
     public function getJWTIdentifier()
@@ -83,7 +84,8 @@ class User extends Authenticatable
         return [];
     }
 
-    public function  todos() {
+    public function  todos()
+    {
         return $this->hasMany(Todo::class, 'created_by', 'id');
     }
 }

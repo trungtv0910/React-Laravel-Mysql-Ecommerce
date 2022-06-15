@@ -12,9 +12,12 @@ const Logout = () => {
     useEffect(() => {
         const handleLogout = async () => {
             try {
-                let res = await logout(dispatch, user);
+                let res = await logout(dispatch, user?.user);
+                console.log('Logout', res);
                 if (res) {
+                    localStorage.removeItem('persist:root');
                     localStorage.clear();
+
                     navigate("/");
                 }
             } catch (error) {

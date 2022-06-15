@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\TodoController;
 use App\Http\Controllers\Api\v2\OrderController;
 use App\Http\Controllers\Api\v2\ProductController as V2ProductController;
-
+use App\Http\Controllers\Api\v2\CartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,7 +68,7 @@ Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
 Route::post('/orders', [OrderController::class, 'store']);
 
-
+Route::post('/addtocart', [CartController::class, 'addtocart']);
 //Protected route
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products', [V2ProductController::class, 'store']);
