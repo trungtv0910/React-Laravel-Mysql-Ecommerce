@@ -1,13 +1,14 @@
 
-import { Add, Remove } from '@material-ui/icons'
+import { Add, AlbumRounded, Delete, Remove } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { mobile } from '../responsive'
 import { useNavigate } from 'react-router-dom';
+import { removeProductInCart } from '../redux/cartRedux'
 // import StripeCheckout from "react-stripe-checkout";
 
 
@@ -161,7 +162,17 @@ transition: all 0.5s ease;
 /* justify-content: flex-end; */
 
 `
+const IconDelete = styled.div`
+    
+transition: all 0.5s ease;
+    &:hover .deleteRemove{
+        cursor: pointer;
+        transform: scale(1.2);
+        color: red;
 
+    }
+
+`
 
 
 
@@ -169,6 +180,7 @@ const Cart = () => {
     const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -201,10 +213,19 @@ const Cart = () => {
                 },
 
             });
-            // console.log('Cart =', cart);
         }
 
     }
+
+    const handleRemoveProduct = (item) => {
+        // Chú ý bạn không nên gọi thẳng removePropduct in cart như vậy mà phải kiểm tra database xem có cart rồi xoá luôn ở database
+        dispatch(removeProductInCart(item));
+    }
+    const handleQuantityProduct = (type, item, index) => {
+        console.log(type, ' bạn đang lick vào item', item, ' vịtri:', index);
+    }
+
+
 
 
     return (
@@ -224,32 +245,38 @@ const Cart = () => {
                 <Bottom>
                     <Info>
 
-                        {cart.products.map((item) => (
+                        {cart.products.map((item, index) => (
+                            <>
+                                < Product key={item.id}>
+                                    <ProductDetail >
+                                        <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
+                                        <Details>
+                                            <ProductName> <b>Product:</b>{item.name}</ProductName>
+                                            <ProductId> <b>ID:</b>{item.id}</ProductId>
+                                            <ProductColor color={item.color ? item.color : "black"} />
+                                            <ProductSize> <b>size:</b>{item.size ? item.size : "Ngẫu nhiên"}</ProductSize>
+                                        </Details>
+                                    </ProductDetail>
+                                    <PriceDetail>
+                                        <ProductAmountContainer>
+                                            <Add style={{ cursor: "pointer" }} onClick={() => handleQuantityProduct("up", item, index)} />
+                                            <ProductAmount>{item.quantity}</ProductAmount>
+                                            <Remove style={{ cursor: "pointer" }} onClick={() => handleQuantityProduct("down", item, index)} />
 
-                            < Product key={item.id}>
-                                <ProductDetail >
-                                    <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
-                                    <Details>
-                                        <ProductName> <b>Product:</b>{item.name}</ProductName>
-                                        <ProductId> <b>ID:</b>{item.id}</ProductId>
-                                        <ProductColor color={item.color ? item.color : "black"} />
-                                        <ProductSize> <b>size:</b>{item.size ? item.size : "Ngẫu nhiên"}</ProductSize>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add style={{ cursor: "pointer" }} />
-                                        <ProductAmount>{item.quantity}</ProductAmount>
-                                        <Remove style={{ cursor: "pointer" }} />
+                                        </ProductAmountContainer>
+                                        <ProductPrice> {item.quantity * item.price}đ</ProductPrice>
+                                    </PriceDetail>
+                                    <PriceDetail style={{ width: "100px" }}>
+                                        <IconDelete onClick={() => handleRemoveProduct(item)}>
+                                            <Delete className="deleteRemove" ></Delete>
+                                        </IconDelete>
 
-                                    </ProductAmountContainer>
-                                    <ProductPrice> {item.quantity * item.price}đ</ProductPrice>
-                                </PriceDetail>
-                            </Product>
-
-
+                                    </PriceDetail>
+                                </Product>
+                                <Hr />
+                            </>
                         ))}
-                        <Hr />
+
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>

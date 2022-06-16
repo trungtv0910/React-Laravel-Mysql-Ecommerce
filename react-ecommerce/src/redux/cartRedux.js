@@ -65,7 +65,22 @@ const cartSlice = createSlice({
             state.total = 0;
             state.quantityProduct = 0;
         },
+        removeProductInCart: (state, action) => {
+            console.log('state', current(state));
+            console.log('action', action)
+            const { id, price, quantity } = action.payload;
+
+            console.log(current(state).products)
+            current(state).products.map((item, index) => {
+                if (item.id === id) {
+                    state.quantityProduct -= 1;
+                    state.total = state.total - (price * quantity);
+                    return state.products.splice(index, 1);
+                }
+            });
+
+        }
     }
 })
-export const { addProduct, resetProductInCart, toggle } = cartSlice.actions
+export const { addProduct, resetProductInCart, toggle, removeProductInCart } = cartSlice.actions
 export default cartSlice.reducer;

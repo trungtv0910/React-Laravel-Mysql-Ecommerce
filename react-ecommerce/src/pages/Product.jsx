@@ -182,7 +182,6 @@ const Product = () => {
             let res = await addProductToCartServer({ product, quantity, color, size });
             if (res && res.data.status === 200) {
                 dispatch(addProduct({ ...product, quantity, color, size }))
-
                 toast.success("The product has been added to Cart");
             } else if (res && res.data.status === 401) {
                 toast.warn("You are not logged in")
