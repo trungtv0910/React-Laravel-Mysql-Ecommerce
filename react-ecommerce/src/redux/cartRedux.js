@@ -66,11 +66,7 @@ const cartSlice = createSlice({
             state.quantityProduct = 0;
         },
         removeProductInCart: (state, action) => {
-            console.log('state', current(state));
-            console.log('action', action)
             const { id, price, quantity } = action.payload;
-
-            console.log(current(state).products)
             current(state).products.map((item, index) => {
                 if (item.id === id) {
                     state.quantityProduct -= 1;
@@ -79,8 +75,46 @@ const cartSlice = createSlice({
                 }
             });
 
+        },
+        handleProductCountUp: (state, action) => {
+            const { id, quantity, price } = action.payload;
+            current(state).products.find((item, index) => {
+                if (item.id === id) {
+                    let UpdateItem = {
+                        ...item,
+                        quantity: quantity + 1
+                    }
+                    state.products[index] = UpdateItem;
+
+                    state.total += Number(price);
+                }
+            });
+        },
+        handleProductCountDown: (state, action) => {
+            const { id, quantity, price } = action.payload;
+
+            current(state).products.find((item, index) => {
+                if (item.id === id) {
+                    if (state.products[index].quantity > 1) {
+                        state.products[index].quantity = quantity - 1;
+                        let UpdateItem = {
+                            ...item,
+                            quantity: quantity - 1
+                        }
+                        state.products[index] = UpdateItem;
+                        state.total -= Number(price);
+                    }
+
+                }
+            });
+
+
         }
+
+
+
+
     }
 })
-export const { addProduct, resetProductInCart, toggle, removeProductInCart } = cartSlice.actions
+export const { addProduct, resetProductInCart, toggle, removeProductInCart, handleProductCountUp, handleProductCountDown } = cartSlice.actions
 export default cartSlice.reducer;

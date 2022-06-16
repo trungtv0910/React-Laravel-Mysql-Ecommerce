@@ -8,7 +8,7 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { mobile } from '../responsive'
 import { useNavigate } from 'react-router-dom';
-import { removeProductInCart } from '../redux/cartRedux'
+import { handleProductCountDown, handleProductCountUp, removeProductInCart } from '../redux/cartRedux'
 // import StripeCheckout from "react-stripe-checkout";
 
 
@@ -222,7 +222,11 @@ const Cart = () => {
         dispatch(removeProductInCart(item));
     }
     const handleQuantityProduct = (type, item, index) => {
-        console.log(type, ' bạn đang lick vào item', item, ' vịtri:', index);
+        if (type === "up") {
+            dispatch(handleProductCountUp(item))
+        } else {
+            dispatch(handleProductCountDown(item))
+        }
     }
 
 
@@ -257,6 +261,9 @@ const Cart = () => {
                                             <ProductSize> <b>size:</b>{item.size ? item.size : "Ngẫu nhiên"}</ProductSize>
                                         </Details>
                                     </ProductDetail>
+                                    <PriceDetail>
+                                        {item.price}đ/1
+                                    </PriceDetail>
                                     <PriceDetail>
                                         <ProductAmountContainer>
                                             <Add style={{ cursor: "pointer" }} onClick={() => handleQuantityProduct("up", item, index)} />
