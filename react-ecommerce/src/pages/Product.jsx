@@ -13,8 +13,9 @@ import { getProductServer } from "../redux/apiProductCall"
 import { addProduct } from "../redux/cartRedux"
 import { mobile } from "../responsive"
 
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Container = styled.div`
@@ -154,7 +155,6 @@ const Product = () => {
                     if (arraySize) {
                         setlistSize(JSON.parse(arraySize));
                     }
-                    // console.log(typeof (listColor));
                 } else {
                     console.log('Lỗi truy xuất sản phẩm id')
                 }
@@ -178,44 +178,25 @@ const Product = () => {
 
 
     const handleAddToCart = async () => {
-
         try {
             let res = await addProductToCartServer({ product, quantity, color, size });
-            console.log(res)
             if (res && res.data.status === 200) {
-                console.log('success');
-                // toast.error('Lỗi');
-                // toast.success('The product has been added to Cart', {
-                //     position: "top-right",
-                //     autoClose: 5000,
-                //     hideProgressBar: false,
-                //     closeOnClick: true,
-                //     pauseOnHover: true,
-                //     draggable: true,
-                //     progress: undefined,
-                // });
+                dispatch(addProduct({ ...product, quantity, color, size }))
+
+                toast.success("The product has been added to Cart");
             } else if (res && res.data.status === 401) {
-                console.log('authenticate');
-                // toast.error('You are not logged in', {
-                //     position: "top-right",
-                //     autoClose: 5000,
-                //     hideProgressBar: false,
-                //     closeOnClick: true,
-                //     pauseOnHover: true,
-                //     draggable: true,
-                //     progress: undefined,
-                // });
+                toast.warn("You are not logged in")
             } else if (res && res.data.status === 500) {
-                console.log('looix server');
+                toast.error("Server Not Connect");
             } else {
-                console.log('looix chua biet ten')
+                toast.error("Error");
             }
         } catch (error) {
             console.log(error)
         }
 
 
-        // dispatch(addProduct({ ...product, quantity, color, size }))
+
     }
 
 
@@ -224,6 +205,7 @@ const Product = () => {
             <Navbar />
             <Announcement />
             <Wrapper>
+                <ToastContainer theme="colored" />
                 <ImgContainer>
                     <Image src={process.env.REACT_APP_BACKEND_URL + product.feature_image_path} />
                 </ImgContainer>

@@ -79,7 +79,7 @@ const StyledLink = styled(Link)`
 
 
 const Navbar = () => {
-    const quantity = useSelector(state => state.cart.quantity);
+    const quantity = useSelector(state => state.cart.quantityProduct);
     const user = useSelector(state => state.user.currentUser);
 
     return (
