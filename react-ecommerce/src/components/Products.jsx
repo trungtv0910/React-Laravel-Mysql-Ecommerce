@@ -2,7 +2,7 @@ import { ContactSupportOutlined } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { popularProducts } from '../data'
-import { getProductsServer } from '../redux/apiProductCall'
+import { getProductByCategoryServer, getProductsServer } from '../redux/apiProductCall'
 import Product from './Product'
 
 const Container = styled.div`
@@ -11,8 +11,8 @@ padding: 20px;
 flex-wrap: wrap;
 justify-content: space-between;
 `
-const Products = ({ cat, filters, sort }) => {
-
+const Products = ({ cateId, filters, sort }) => {
+    console.log('cateId', cateId, 'filter', filters, 'sort', sort);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [productsFiltet, setProductsFiltet] = useState([]);
@@ -21,7 +21,14 @@ const Products = ({ cat, filters, sort }) => {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                let listProducts = await getProductsServer();
+                console.log('cateId', cateId)
+                let listProducts;
+                if (cateId) {
+                    listProducts = await getProductByCategoryServer(cateId);
+                } else {
+                    listProducts = await getProductsServer();
+                }
+                console.log('LISTPRODUCTS', listProducts);
 
                 if (listProducts && listProducts.status === 200) {
                     setProducts(listProducts.data.data);
@@ -33,14 +40,13 @@ const Products = ({ cat, filters, sort }) => {
                 console.log(error);
             }
         }
-
         getProducts();
 
-    }, [cat]);
+    }, [cateId]);
 
     useEffect(() => {
         const setProductFil = () => {
-            cat &&
+            cateId &&
                 products.filter((item, keyFilter) =>
                     Object.entries(filters).every(([key, value]) => {
                         let array = item[key].replace(/'/g, '"');
@@ -61,10 +67,10 @@ const Products = ({ cat, filters, sort }) => {
 
 
 
-    }, [products, cat, filters]);
+    }, [products, cateId, filters]);
     useEffect(() => {
         const setProductFil = () => {
-            cat &&
+            cateId &&
                 products.filter((item, keyFilter) =>
                     Object.entries(filters).every(([key, value]) => {
                         let array = item[key].replace(/'/g, '"');
@@ -101,7 +107,7 @@ const Products = ({ cat, filters, sort }) => {
 
         <Container>
 
-            {(cat && filteredProducts.length > 0) ? filteredProducts.map((item) =>
+            {(cateId && filteredProducts.length > 0) ? filteredProducts.map((item) =>
                 <Product item={item} key={item.id}></Product>
             ) :
                 products.slice(0, 8).map((item, index) => (

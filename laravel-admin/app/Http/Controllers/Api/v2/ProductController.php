@@ -31,12 +31,10 @@ class ProductController extends Controller
 
         $dataNew = [];
         foreach ($dataCategoies as $key => $itemCate) {
-//            $dataNew[$key] =  $itemCate->category_query_product;
-//            $dataNew[$key] =  $itemCate->name;
-            foreach ( $itemCate->category_query_product as $keyProd => $itemProd){
-                    $dataNew[]=$itemCate;
-            }
 
+               if($itemCate->category_query_product){
+                   $dataNew[]= $itemCate;
+               }
 
         }
 
@@ -46,6 +44,28 @@ class ProductController extends Controller
             'data' => $dataNew
         ], 200);
     }
+
+//    -------------------------------------------------
+    public function getProductsListByCate(Request $request){
+        if($request->id){
+            $cateId = $request->id;
+            $dataCate = Category::find($cateId);
+            $data =  $dataCate->category_query_product;
+            return response()->json([
+                'status' => 200,
+                'message' => 'Get product by category success',
+                'data' => $data
+            ], 200);;
+        }
+        return response()->json([],500);
+
+    }
+
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.

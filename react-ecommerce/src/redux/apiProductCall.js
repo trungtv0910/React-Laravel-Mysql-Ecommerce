@@ -11,3 +11,8 @@ export const getProductServer = async (id) => {
     await publicRequest.get('/sanctum/csrf-cookie');
     return await publicRequest.get(`/api/product/${id}`);
 }
+
+export const getProductByCategoryServer = async (id) => {
+    await publicRequest.get('/sanctum/csrf-cookie');
+    return await publicRequest.get(`/api/productsListByCate/${id}`);
+}

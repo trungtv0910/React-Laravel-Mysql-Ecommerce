@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\v1\TodoController;
 use App\Http\Controllers\Api\v2\OrderController;
 use App\Http\Controllers\Api\v2\ProductController as V2ProductController;
 use App\Http\Controllers\Api\v2\CartController;
+use App\Http\Controllers\Api\v2\CategoryController as V2CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -61,13 +62,16 @@ use App\Http\Controllers\Api\v2\CartController;
 
 Route::post('register', [\App\Http\Controllers\Api\v2\AuthController::class, 'register']);
 Route::post('login', [\App\Http\Controllers\Api\v2\AuthController::class, 'login']);
+
 Route::get('/products', [V2ProductController::class, 'index']);
-Route::get('/product/{id}', [V2ProductController::class, 'show']);
+Route::get('/productsListByCate/{id}', [V2ProductController::class, 'getProductsListByCate']); // list product by cate id
+
+Route::get('/product/{id}', [V2ProductController::class, 'show']); // get one product by product id
 Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
 Route::get('/allProducts', [V2ProductController::class, 'allProductsWithCate']);
 
-
+Route::get('/allCategories', [V2CategoryController::class, 'getAllCate']);
 
 
 //Protected route
