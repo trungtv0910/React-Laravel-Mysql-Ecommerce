@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { apiAddToCartServer } from '../redux/apiCheckoutCart'
@@ -25,28 +25,26 @@ const success = () => {
 
     const data = location.state.stripeData;
     const cart = location.state.cart;
+    const user = location.state.userCurrent?.user;
+    const dispatch = useDispatch();
+
     const [orderId, setOrderId] = useState(null);
     useEffect(() => {
         const createOrder = async () => {
             try {
-                let resOrder = await apiAddToCartServer(cart);
-                console.log('resORder', resOrder.data);
+                cart['user'] = user;
+                let resOrder = await apiAddToCartServer(dispatch, cart);
                 setOrderId(resOrder.data.id);
             } catch (error) {
-
+                console.log(error);
             }
 
         };
         createOrder();
     }, [cart]);
-
-    // const currentUser = useSelector((state) => state.user.currentUser);
-    // console.log('currentUser', currentUser);
-
     return (
 
         <Container>
-
             <Wrapper>
                 <div style={{ padding: 10 }}>
                     {orderId ? `Order has been created successfully. Your order number is ${orderId}` : `

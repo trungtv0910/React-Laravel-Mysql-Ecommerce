@@ -178,6 +178,7 @@ transition: all 0.5s ease;
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
+    const user = useSelector(state => state.user.currentUser);
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -186,30 +187,15 @@ const Cart = () => {
         setStripeToken(token);
     };
 
-    // useEffect(() => {
-    //     const makeRequest = async () => {
-    //         try {
-    //             //     const res = await userRequest.post("/checkout/payment", {
-    //             //         tokenId: stripeToken.id,
-    //             //         amount: 500,
-    //             //     });
-    //             //     history.push("/success", {
-    //             //         stripeData: res.data,
-    //             //         products: cart,
-    //             //     });
-    //         } catch { }
-    //     };
-    //     stripeToken && makeRequest();
-    // }, [stripeToken, cart.total, history]);
 
     const handleCheckOut = () => {
         let clientConfirm = confirm("Bạn Xác Nhận Thanh Toán?");
         if (clientConfirm) {
-            // navigate("/success");
             navigate("/success", {
                 state: {
                     cart: cart,
-                    stripeData: "Trungdata"
+                    stripeData: "Trungdata",
+                    userCurrent: user
                 },
 
             });

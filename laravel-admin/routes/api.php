@@ -66,9 +66,9 @@ Route::get('/product/{id}', [V2ProductController::class, 'show']);
 Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
 
-Route::post('/orders', [OrderController::class, 'store']);
 
-Route::post('/addtocart', [CartController::class, 'addtocart']);
+
+
 //Protected route
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products', [V2ProductController::class, 'store']);
@@ -76,4 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/products/{id}', [V2ProductController::class, 'destroy']);
     Route::get('user', [\App\Http\Controllers\Api\v2\AuthController::class, 'user']);
     Route::post('logout', [\App\Http\Controllers\Api\v2\AuthController::class, 'logout']);
+
+    Route::post('/addtocart', [CartController::class, 'addtocart']);
+
+    Route::post('/orders', [OrderController::class, 'store']);
 });

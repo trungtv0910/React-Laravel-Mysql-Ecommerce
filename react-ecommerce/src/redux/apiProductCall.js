@@ -4,8 +4,6 @@ import { publicRequest } from '../requestMethods';
 export const getProductsServer = async () => {
     await publicRequest.get('/sanctum/csrf-cookie');
     let res = await publicRequest.get('/api/products');
-
-    console.log('resProduct=', res);
     return res;
 }
 

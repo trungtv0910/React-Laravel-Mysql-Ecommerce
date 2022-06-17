@@ -144,7 +144,7 @@ const Product = () => {
                 const res = await getProductServer(id);
 
                 if (res && res.data.status === 200) {
-                    console.log(res.data);
+
                     setProduct(res.data.data);
 
                     let arrayColor = (res.data.data.color).replace(/'/g, '"');

@@ -12,9 +12,7 @@ flex-wrap: wrap;
 justify-content: space-between;
 `
 const Products = ({ cat, filters, sort }) => {
-    console.log(cat, filters, sort);
-    // let listProducts = await getProducts();
-    // console.log('dang sách sản phẩm', listProducts)
+
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [productsFiltet, setProductsFiltet] = useState([]);
@@ -111,9 +109,6 @@ const Products = ({ cat, filters, sort }) => {
                 ))
 
             }
-            {/* {products.slice(0, 8).map((item, index) => (
-                <Product item={item} key={item.id}></Product>
-            ))} */}
 
 
         </Container>
