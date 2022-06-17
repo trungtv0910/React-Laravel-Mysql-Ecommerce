@@ -39,13 +39,6 @@ const App = () => {
   const user = useSelector((state) => state.user.currentUser);
   console.log('GERUSSER', user)
   return (
-
-    // <ProductList />
-    // <Product />
-    // <Login />
-    // <Register />
-    // <Cart />
-
     <Router>
 
       <Routes>

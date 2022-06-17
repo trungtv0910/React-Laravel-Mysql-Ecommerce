@@ -1,0 +1,7 @@
+.menu-cate .MuiMenu-paper{
+    background-color:teal !important;
+    color: white;
+    width: 300px;
+    min-height: 90vh;
+    border-radius: 0px;
+}

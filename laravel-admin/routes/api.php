@@ -65,6 +65,7 @@ Route::get('/products', [V2ProductController::class, 'index']);
 Route::get('/product/{id}', [V2ProductController::class, 'show']);
 Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 
+Route::get('/allProducts', [V2ProductController::class, 'allProductsWithCate']);
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -23,10 +24,33 @@ class ProductController extends Controller
         ], 200);
     }
 
+    public function allProductsWithCate()
+    {
+        $dataProducts = Product::all();
+        $dataCategoies = Category::all();
+
+        $dataNew = [];
+        foreach ($dataCategoies as $key => $itemCate) {
+//            $dataNew[$key] =  $itemCate->category_query_product;
+//            $dataNew[$key] =  $itemCate->name;
+            foreach ( $itemCate->category_query_product as $keyProd => $itemProd){
+                    $dataNew[]=$itemCate;
+            }
+
+
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Get data success',
+            'data' => $dataNew
+        ], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,7 +68,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -68,8 +92,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,7 +106,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -93,7 +117,7 @@ class ProductController extends Controller
     /**
      * Search for a name
      *
-     * @param  str  $name
+     * @param str $name
      * @return \Illuminate\Http\Response
      */
     public function search($name)

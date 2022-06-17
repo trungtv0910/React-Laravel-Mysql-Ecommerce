@@ -1,12 +1,20 @@
-import { Badge } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
-import React from 'react';
+import { Accordion, AccordionDetails, AccordionSummary, Badge, Button, Collapse, IconButton, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles, Menu } from '@material-ui/core';
+import { ExpandLess, ReorderOutlined, Search, StarBorder, ViewList } from '@material-ui/icons';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import MenuIcon from '@material-ui/icons/Menu';
+import './navbar.css';
+
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import SendIcon from '@material-ui/icons/Send';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 const Container = styled.div`
     height:60px;
@@ -76,16 +84,110 @@ const StyledLink = styled(Link)`
         text-decoration: none;
     }
 `;
-
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightRegular,
+    },
+}));
 
 const Navbar = () => {
     const quantity = useSelector(state => state.cart.quantityProduct);
     const user = useSelector(state => state.user.currentUser);
+    // menu category
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    // end menu category
+    // handlde click child menu
+
+    const classes = useStyles();
 
     return (
         <Container>
             <Warapper >
                 <Left>
+
+                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <MenuIcon />
+                    </Button>
+                    <Menu className="menu-cate"
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+
+                    >
+                        <ListItem button>
+                            <ListItemIcon>
+                                <ReorderOutlined onClick={handleClose} />
+                            </ListItemIcon>
+                            <ListItemText primary="All Categories" />
+                        </ListItem>
+                        {/* <MenuItem onClick={handleClose}> */}
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                                <Typography className={classes.heading}>Accordion 1</Typography>
+                            </AccordionSummary>
+                            <List component="nav" aria-label="main mailbox folders">
+                                <ListItem button onClick={handleClose}>
+                                    <ListItemIcon>
+                                        <InboxIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Inbox" />
+                                </ListItem>
+                                <ListItem button onClick={handleClose}>
+                                    <ListItemIcon>
+                                        <InboxIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Inbox" />
+                                </ListItem>
+                            </List>
+                        </Accordion>
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel2a-content"
+                                id="panel2a-header"
+                            >
+                                <Typography className={classes.heading}>Accordion 2</Typography>
+                            </AccordionSummary>
+
+                            <List component="nav" aria-label="main mailbox folders">
+                                <ListItem button onClick={handleClose}>
+                                    <ListItemIcon>
+                                        <InboxIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Inbox" />
+                                </ListItem>
+                                <ListItem button onClick={handleClose}>
+                                    <ListItemIcon>
+                                        <InboxIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Inbox" />
+                                </ListItem>
+                            </List>
+
+                        </Accordion>
+                        {/* </MenuItem> */}
+
+                    </Menu>
+
+
                     <Language>EN</Language>
                     <SearchContainer>
                         <Input />

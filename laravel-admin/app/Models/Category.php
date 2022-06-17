@@ -15,4 +15,10 @@ class Category extends Model
     public function CategoryChildrent(){
         return $this->hasMany(Category::class,'parent_id');
     }
+
+
+    public function category_query_product()
+    {
+        return $this->belongsToMany(Product::class, 'product_category', 'category_id', 'product_id')->withTimestamps();
+    }
 }
