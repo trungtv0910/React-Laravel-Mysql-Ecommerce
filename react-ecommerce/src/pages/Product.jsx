@@ -141,7 +141,15 @@ const Product = () => {
 
     // check user exist
     const { currentUser, error } = useSelector((state) => state.user);
-    console.log(currentUser)
+
+
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+
+
     useEffect(() => {
         const getProductByid = async () => {
             try {

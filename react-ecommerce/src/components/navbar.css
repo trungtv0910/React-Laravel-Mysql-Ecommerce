@@ -18,3 +18,8 @@
 .menu-cate .MuiAccordion-rounded:first-child{
     border-radius: 0px;
 }
+
+.search_icon :hover{
+    transform: scale(1.1);
+    color: rgb(12, 6, 6);
+}

@@ -5,6 +5,7 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
+import ProductSearch from "./pages/ProductsSearch";
 import { BrowserRouter as Router, Navigate, Redirect, Route, Routes } from 'react-router-dom';
 import { publicRequest } from "./requestMethods";
 import { useEffect } from "react";
@@ -15,6 +16,7 @@ import Logout from "./pages/Logout";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -46,7 +48,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/products/:category/:name" element={<ProductList />} />
         <Route path="/products/:category" element={<ProductList />} />
-        <Route path="/products/" element={<ProductList />} />
+        <Route path="/search/:name" element={<ProductSearch />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/success" element={<Success />} />

@@ -114,12 +114,13 @@ const Product = ({ item }) => {
           {/* <Circle /> */}
           <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
           <Info>
+            <Link to={`/productDetail/${item.id}`} >
+              <Icon>
+                <ShoppingCartOutlined />
+              </Icon>
+            </Link>
             <Icon>
-              <ShoppingCartOutlined />
-            </Icon>
-            <Icon>
-              {/* <StyledLink to={`/product/${item.id}`} > */}
-              <StyledLink to={'/product/' + item.id} >
+              <StyledLink to={`/product/${item.id}`} >
                 <SearchOutlined />
               </StyledLink>
             </Icon>

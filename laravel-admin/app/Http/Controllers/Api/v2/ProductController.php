@@ -32,10 +32,9 @@ class ProductController extends Controller
         $dataNew = [];
         foreach ($dataCategoies as $key => $itemCate) {
 
-               if($itemCate->category_query_product){
-                   $dataNew[]= $itemCate;
-               }
-
+            if ($itemCate->category_query_product) {
+                $dataNew[] = $itemCate;
+            }
         }
 
         return response()->json([
@@ -45,9 +44,10 @@ class ProductController extends Controller
         ], 200);
     }
 
-//    -------------------------------------------------
-    public function getProductsListByCate(Request $request){
-        if($request->id){
+    //    -------------------------------------------------
+    public function getProductsListByCate(Request $request)
+    {
+        if ($request->id) {
             $cateId = $request->id;
             $dataCate = Category::find($cateId);
             $data =  $dataCate->category_query_product;
@@ -57,8 +57,7 @@ class ProductController extends Controller
                 'data' => $data
             ], 200);;
         }
-        return response()->json([],500);
-
+        return response()->json([], 500);
     }
 
 
@@ -142,6 +141,14 @@ class ProductController extends Controller
      */
     public function search($name)
     {
-        return Product::where('name', 'like', '%' . $name . '%')->get();
+        if ($name) {
+            $data =  Product::where('name', 'like', '%' . $name . '%')->get();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Get data success',
+                'data' => $data
+            ], 200);
+        }
+        return response()->json([], 500);
     }
 }

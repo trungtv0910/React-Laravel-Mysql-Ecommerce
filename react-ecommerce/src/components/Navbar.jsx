@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { mobile } from '../responsive';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
 import './navbar.css';
@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import { getCategoriesServer } from '../redux/apiCategoryCall';
-
+import { getProductSearchServer } from "../redux/apiProductCall";
 
 
 const Container = styled.div`
@@ -52,6 +52,7 @@ padding:5px;
 
 const Input = styled.input`
     border:none;
+    outline:none;
     ${mobile({ width: "50px" })}
 
 `
@@ -101,7 +102,8 @@ const Navbar = () => {
     const quantity = useSelector(state => state.cart.quantityProduct);
     const user = useSelector(state => state.user.currentUser);
     const [dataCategories, setDataCategories] = useState([]);
-
+    const [inputSearch, setInputSearch] = useState("");
+    const navigate = useNavigate();
     // menu category
     const [anchorEl, setAnchorEl] = useState(null);
     const handleClick = (event) => {
@@ -126,6 +128,24 @@ const Navbar = () => {
         }
         loadCategories();
     }, []);
+
+    const handleSearch = async () => {
+
+        if (!inputSearch) {
+            alert('Vui lòng nhập tên sản phẩm');
+        }
+        else {
+            navigate(`/search/${inputSearch}`, {
+                state: {
+                    key: inputSearch,
+                },
+
+            });
+        }
+
+    }
+
+
     return (
         <Container>
             <Warapper >
@@ -185,35 +205,15 @@ const Navbar = () => {
                                 }
                             </div>
                         ))}
-                        {/* <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                            >
-                                <Typography className={classes.heading}>Accordion 2</Typography>
-                            </AccordionSummary>
 
-                            <List component="nav" aria-label="main mailbox folders">
-                                <ListItem button onClick={handleClose}>
-                                    <ListItemIcon>
-                                        <InboxIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Inbox" />
-                                </ListItem>
-
-                            </List>
-
-                        </Accordion> */}
-                        {/* </MenuItem> */}
 
                     </Menu>
 
 
                     <Language>EN</Language>
                     <SearchContainer>
-                        <Input />
-                        <Search style={{ color: "gray", fontSize: 16 }}></Search>
+                        <Input value={inputSearch} onChange={(e) => setInputSearch(e.target.value)} />
+                        <Search className="search_icon" style={{ color: "gray", fontSize: 16, cursor: "pointer" }} onClick={() => handleSearch()}></Search>
                     </SearchContainer>
                 </Left>
                 <Center>

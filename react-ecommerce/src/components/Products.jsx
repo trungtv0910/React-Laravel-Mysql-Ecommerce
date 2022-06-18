@@ -2,7 +2,7 @@ import { ContactSupportOutlined } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { popularProducts } from '../data'
-import { getProductByCategoryServer, getProductsServer } from '../redux/apiProductCall'
+import { getProductByCategoryServer, getProductSearchServer, getProductsServer } from '../redux/apiProductCall'
 import Product from './Product'
 
 const Container = styled.div`
@@ -12,23 +12,28 @@ flex-wrap: wrap;
 justify-content:flex-start;
 padding: 20px;
 `
-const Products = ({ cateId, filters, sort }) => {
-    console.log('cateId', cateId, 'filter', filters, 'sort', sort);
+const Products = ({ cateId, filters, sort, keySearch }) => {
+    console.log('cateId', cateId, 'filter', filters, 'sort', sort, "Key", keySearch);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [productsFiltet, setProductsFiltet] = useState([]);
+    // const [productsFiltet, setProductsFiltet] = useState([]);
 
 
     useEffect(() => {
         const getProducts = async () => {
             try {
-                console.log('cateId', cateId)
+
                 let listProducts;
                 if (cateId) {
                     listProducts = await getProductByCategoryServer(cateId);
-                } else {
+                }
+                else if (keySearch) {
+                    listProducts = await getProductSearchServer(keySearch);
+                }
+                else {
                     listProducts = await getProductsServer();
                 }
+
 
                 if (listProducts && listProducts.status === 200) {
                     setProducts(listProducts.data.data);
@@ -42,7 +47,7 @@ const Products = ({ cateId, filters, sort }) => {
         }
         getProducts();
 
-    }, [cateId]);
+    }, [cateId, keySearch]);
 
     useEffect(() => {
         const setProductFil = () => {
@@ -75,8 +80,6 @@ const Products = ({ cateId, filters, sort }) => {
                     Object.entries(filters).every(([key, value]) => {
                         let array = item[key].replace(/'/g, '"');
                         array = JSON.parse(array);
-
-                        // console.log('item [' + keyFilter + ']đủ điều kiện', array.includes(value))
                         if (array.includes(value) == true) {
                             setFilteredProducts(filteredProducts => [...filteredProducts, item]);
 
