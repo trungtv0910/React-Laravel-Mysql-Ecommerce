@@ -151,9 +151,10 @@ const Navbar = () => {
                         {/* <MenuItem onClick={handleClose}> */}
 
                         {dataCategories && dataCategories.map((item, index) => (
-                            <>
+                            <div key={item.id}>
                                 {item.parent_id == 0 && item.delete_at == null &&
-                                    <Accordion>
+
+                                    <Accordion >
                                         <AccordionSummary
                                             expandIcon={<ExpandMoreIcon />}
                                             aria-controls="panel1a-content"
@@ -161,36 +162,28 @@ const Navbar = () => {
                                         >
                                             <Typography className={classes.heading}> {item.name}</Typography>
                                         </AccordionSummary>
-                                        {dataCategories.map((itemChild) => (
-                                            <>
+                                        {dataCategories.map((itemChild, childKey) => (
+                                            <div key={itemChild.id}>
                                                 {itemChild.parent_id != 0 && itemChild.parent_id === item.id &&
-                                                    <List component="nav" aria-label="main mailbox folders">
+
+                                                    <List component="nav" aria-label="main mailbox folders" key={itemChild.id}>
                                                         <StyledLink to={`/products/${itemChild.id}`} state={{ cateName: itemChild.name }} >
-                                                            {/* <StyledLink to={
-                                                            {
-                                                                pathname: `/products/${itemChild.id}`,
-                                                                state: {
-                                                                    test: itemChild
-                                                                }
-                                                            }
-
-                                                        } > */}
-
                                                             <ListItem button onClick={handleClose}>
                                                                 <ListItemIcon>
                                                                     <InboxIcon />
                                                                 </ListItemIcon>
                                                                 <ListItemText primary={itemChild.name} />
                                                             </ListItem>
-
                                                         </StyledLink>
                                                     </List>
+
                                                 }
-                                            </>
+                                            </div>
                                         ))}
                                     </Accordion>
+
                                 }
-                            </>
+                            </div>
                         ))}
                         {/* <Accordion>
                             <AccordionSummary

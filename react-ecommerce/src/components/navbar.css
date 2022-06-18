@@ -5,3 +5,16 @@
     min-height: 90vh;
     border-radius: 0px;
 }
+.menu-cate .MuiList-padding{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.menu-cate .MuiAccordion-rounded{
+    border-radius: 0px; 
+}
+.menu-cate .MuiAccordion-rounded:last-child{
+    border-radius: 0px;
+}
+.menu-cate .MuiAccordion-rounded:first-child{
+    border-radius: 0px;
+}

@@ -7,9 +7,10 @@ import Product from './Product'
 
 const Container = styled.div`
 display: flex;
-padding: 20px;
+
 flex-wrap: wrap;
-justify-content: space-between;
+justify-content:flex-start;
+padding: 20px;
 `
 const Products = ({ cateId, filters, sort }) => {
     console.log('cateId', cateId, 'filter', filters, 'sort', sort);
@@ -28,7 +29,6 @@ const Products = ({ cateId, filters, sort }) => {
                 } else {
                     listProducts = await getProductsServer();
                 }
-                console.log('LISTPRODUCTS', listProducts);
 
                 if (listProducts && listProducts.status === 200) {
                     setProducts(listProducts.data.data);
@@ -110,7 +110,7 @@ const Products = ({ cateId, filters, sort }) => {
             {(cateId && filteredProducts.length > 0) ? filteredProducts.map((item) =>
                 <Product item={item} key={item.id}></Product>
             ) :
-                products.slice(0, 8).map((item, index) => (
+                products.slice(0, 12).map((item, index) => (
                     <Product item={item} key={item.id}></Product>
                 ))
 

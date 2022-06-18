@@ -59,21 +59,22 @@ const ProductList = () => {
 
     return (
         <Container>
-            <Navbar />
             <Announcement />
+            <Navbar />
+
             <Title>{cateName}</Title>
             <FilterContainer>
                 <Filter> <FilterText>Filter Products</FilterText>
-                    <Select name="color" onChange={(e) => handleFilter(e)}>
-                        <Option disabled >Color</Option>
+                    <Select name="color" defaultValue="" onChange={(e) => handleFilter(e)}>
+                        <Option value="ALL">Color</Option>
                         <Option>White</Option>
                         <Option>Black</Option>
                         <Option>Red</Option>
                         <Option>Yellow</Option>
                         <Option>Green</Option>
                     </Select>
-                    <Select name="size" onChange={(e) => handleFilter(e)}>
-                        <Option disabled >Size</Option>
+                    <Select name="size" defaultValue="" onChange={(e) => handleFilter(e)}>
+                        <Option value="ALL" >Size</Option>
                         <Option>XS</Option>
                         <Option>S</Option>
                         <Option>M</Option>
@@ -82,8 +83,8 @@ const ProductList = () => {
                     </Select>
                 </Filter>
                 <Filter> <FilterText>Sort Products</FilterText>
-                    <Select onChange={(e) => setSort(e.target.value)}>
-                        <Option disabled selected value="newest">Newest</Option>
+                    <Select defaultValue="newest" onChange={(e) => setSort(e.target.value)}>
+                        <Option value="newest">Newest</Option>
                         <Option value="asc">Price (asc)</Option>
                         <Option value="desc">Price (desc)</Option>
 
