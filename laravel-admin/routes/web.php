@@ -7,7 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-
+use App\Http\Controllers\OrderController;
 require __DIR__.'/auth.php';
 
 
@@ -63,6 +63,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit')->middleware(['auth','can:edit-role']);
         Route::get('/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete')->middleware(['auth','can:delete-role']);
         Route::post('/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    });
+
+    Route::prefix('order')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('order.list');
+        Route::get('/create', [OrderController::class, 'create'])->name('order.add');
+        Route::post('/store', [OrderController::class, 'store'])->name('order.store');
+        Route::get('/edit/{id}', [OrderController::class, 'detail'])->name('order.detail');
+        Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
+        Route::post('/update/{id}', [OrderController::class, 'update'])->name('order.update');
     });
     Route::prefix('test')->group(function () {
         Route::get('/', function (){

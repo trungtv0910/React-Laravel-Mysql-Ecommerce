@@ -15,4 +15,14 @@ class Order extends Model
     {
         return $this->hasMany(order_detail::class, 'order_id');
     }
+    public function OrderOfUser()
+    {
+        return $this->belongsTo(user::class, 'user_id');
+    }
+
+    public function orderDetail_product()
+    {
+//        return $this->hasMany(Product_category::class,'product_id');
+        return $this->belongsToMany(OrderDetail::class, 'product', 'product_id', 'order_id')->withTimestamps();
+    }
 }
