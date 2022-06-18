@@ -1,7 +1,7 @@
 import { Add, InvertColorsOffTwoTone, Remove, RestoreSharp } from "@material-ui/icons"
 import { isFulfilled } from "@reduxjs/toolkit"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import Announcement from "../components/Announcement"
@@ -138,6 +138,10 @@ const Product = () => {
     const [ADDTOCART, setADDTOCART] = useState(false);
     const dispatch = useDispatch();
 
+
+    // check user exist
+    const { currentUser, error } = useSelector((state) => state.user);
+    console.log(currentUser)
     useEffect(() => {
         const getProductByid = async () => {
             try {
@@ -178,20 +182,26 @@ const Product = () => {
 
 
     const handleAddToCart = async () => {
-        try {
-            let res = await addProductToCartServer({ product, quantity, color, size });
-            if (res && res.data.status === 200) {
-                dispatch(addProduct({ ...product, quantity, color, size }))
-                toast.success("The product has been added to Cart");
-            } else if (res && res.data.status === 401) {
-                toast.warn("You are not logged in")
-            } else if (res && res.data.status === 500) {
-                toast.error("Server Not Connect");
-            } else {
-                toast.error("Error");
+        if (currentUser) {
+            try {
+                let res = await addProductToCartServer({ product, quantity, color, size });
+                if (res && res.data.status === 200) {
+                    dispatch(addProduct({ ...product, quantity, color, size }))
+                    return toast.success("The product has been added to Cart");
+                } else if (res && res.data.status === 401) {
+                    return toast.warn("You are not logged in")
+                } else if (res && res.data.status === 500) {
+                    return toast.error("Server Not Connect");
+                } else {
+                    return toast.error("Error");
+                }
+                return toast.error("Error");
+            } catch (error) {
+                toast.warn("You are not login");
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
+        } else {
+            toast.warn("You must be logged in to purchase");
         }
 
 
