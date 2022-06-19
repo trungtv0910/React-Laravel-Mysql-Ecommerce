@@ -122,6 +122,32 @@ class ProductController extends Controller
         return $product;
     }
 
+
+
+    public function relatedProduct($id)
+    {
+        $data = Product::find($id);
+        if (!$data) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Get data product Error form Server',
+            ], 400);
+        } else {
+            $data = $data->select_cate;
+            // Tại vì 1 sản phẩm có thể có nhiều danh mục;
+            $dataRelated = [];
+            foreach ($data as $value) {
+                foreach ($value->category_query_product as $valueItem) {
+                    $dataRelated[] = $valueItem;
+                };
+            }
+            return response()->json([
+                'status' => 200,
+                'message' => 'Get data related product success',
+                'data' => $dataRelated
+            ], 200);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

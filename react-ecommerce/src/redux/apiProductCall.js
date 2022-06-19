@@ -20,3 +20,8 @@ export const getProductSearchServer = async (key) => {
     await publicRequest.get('/sanctum/csrf-cookie');
     return await publicRequest.get(`/api/products/search/${key}`);
 }
+// sản phẩm cùng 1 danh mục category dựa thêo id sản phẩm
+export const getRelatedProductServer = async (id) => {
+    await publicRequest.get('/sanctum/csrf-cookie');
+    return await publicRequest.get(`/api/relatedProduct/${id}`);
+}

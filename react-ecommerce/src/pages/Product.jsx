@@ -9,13 +9,14 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Newsletter from "../components/Newsletter"
 import { addProductToCartServer, testCartServer } from "../redux/apiCart"
-import { getProductServer } from "../redux/apiProductCall"
+import { getProductServer, getRelatedProductServer } from "../redux/apiProductCall"
 import { addProduct } from "../redux/cartRedux"
 import { mobile } from "../responsive"
 
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProductsRelated from "../components/ProductsRelated"
 
 
 const Container = styled.div`
@@ -69,12 +70,21 @@ const FilterTitle = styled.span`
     font-size: 20px;
     font-weight: 200;
 `
-const FilterColor = styled.div`
+const FilterColor = styled.button`
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: ${props => props.color};
     margin: 0 5px;
+    outline: none;
+    border:none;
+ 
+    &:focus {
+        color: palevioletred;
+        transform: scale(1.5);
+        border:2px solid teal
+    }
+    /* &:focus{border:3px solid teal} */
     cursor: pointer;
 `
 const FilterSize = styled.select`
@@ -127,6 +137,7 @@ const Product = () => {
     const location = useLocation();
     const id = location.pathname.split('/')[2];
     const [product, setProduct] = useState({});
+    const [productsRelated, setProductsRelated] = useState([]);
     //set list color and size form server
     const [listColor, setlistColor] = useState([]);
     const [listSize, setlistSize] = useState([]);
@@ -146,7 +157,7 @@ const Product = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+    }, [id]);
 
 
 
@@ -154,7 +165,6 @@ const Product = () => {
         const getProductByid = async () => {
             try {
                 const res = await getProductServer(id);
-
                 if (res && res.data.status === 200) {
 
                     setProduct(res.data.data);
@@ -167,6 +177,12 @@ const Product = () => {
                     if (arraySize) {
                         setlistSize(JSON.parse(arraySize));
                     }
+                    //  sau khi truy xuất được 1 sản phẩm thì ta tiếp tục với sản phẩm liên quan
+                    let resProductRelated = await getRelatedProductServer(res.data.data.id);
+                    if (resProductRelated && resProductRelated.data.status === 200) {
+                        setProductsRelated(resProductRelated.data.data);
+                    }
+
                 } else {
                     console.log('Lỗi truy xuất sản phẩm id')
                 }
@@ -248,7 +264,8 @@ const Product = () => {
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
-                            <FilterSize onChange={(e) => setSize(e.target.value)} >
+                            <FilterSize defaultValue="null" onChange={(e) => setSize(e.target.value)} >
+                                <option value="null" disabled >None</option>
                                 {
                                     listSize.map((itemSize) => (
                                         <FilterSizeOption key={itemSize} value={itemSize} >{itemSize}</FilterSizeOption>
@@ -268,6 +285,7 @@ const Product = () => {
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>
+            <ProductsRelated productsRelated={productsRelated}></ProductsRelated>
             {/* <Newsletter /> */}
             <Footer />
 

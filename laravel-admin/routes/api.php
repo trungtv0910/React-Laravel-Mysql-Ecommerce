@@ -72,6 +72,7 @@ Route::get('/products/search/{name}', [V2ProductController::class, 'search']);
 Route::get('/allProducts', [V2ProductController::class, 'allProductsWithCate']);
 
 Route::get('/allCategories', [V2CategoryController::class, 'getAllCate']);
+Route::get('/relatedProduct/{id}', [V2ProductController::class, 'relatedProduct']); // get product inthe same cate
 
 
 //Protected route

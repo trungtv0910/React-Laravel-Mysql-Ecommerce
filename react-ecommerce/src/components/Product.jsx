@@ -27,8 +27,9 @@ const Info = styled.div`
 
 const Container = styled.div`
     /* flex: 1; */
+
     margin: 10px;
-    flex-basis:23%;
+    flex-basis:${props => props.width}%;
     /* min-width:calc(100% * (1/5) - 2px); */
     /* min-width: 290px; */
     /* height: 500px; */
@@ -37,7 +38,7 @@ const Container = styled.div`
  
     align-items: center; 
      justify-content: center; 
-  
+    
   
     position: relative;
     &:hover ${Info}{
@@ -93,7 +94,13 @@ flex-direction: column;
 /* width: 100%; */
 `
 const Title = styled.h2`
-  
+  font-weight: 700;
+  font-size: 16px;
+  color:#231f20;
+  margin-bottom: 3px;
+  /* color:red; */
+
+  line-height: 1.2em;
 `
 const Price = styled.p`
   .del{color:red}
@@ -106,24 +113,24 @@ const StyledLink = styled(Link)`
         text-decoration: none;
     }
 `;
-const Product = ({ item }) => {
+const Product = ({ item, width }) => {
   return (
     <>
-      <Container>
+      <Container width={width} >
         <Warapper>
           {/* <Circle /> */}
           <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
           <Info>
-            <Link to={`/productDetail/${item.id}`} >
+            <StyledLink to={`/product/${item.id}`} >
               <Icon>
                 <ShoppingCartOutlined />
               </Icon>
-            </Link>
-            <Icon>
-              <StyledLink to={`/product/${item.id}`} >
+            </StyledLink>
+            <StyledLink to={`/product/${item.id}`} >
+              <Icon>
                 <SearchOutlined />
-              </StyledLink>
-            </Icon>
+              </Icon>
+            </StyledLink>
             <Icon>
               <FavoriteBorderOutlined />
             </Icon>

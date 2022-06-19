@@ -12,6 +12,7 @@ flex-wrap: wrap;
 justify-content:flex-start;
 padding: 20px;
 `
+
 const Products = ({ cateId, filters, sort, keySearch }) => {
     console.log('cateId', cateId, 'filter', filters, 'sort', sort, "Key", keySearch);
     const [products, setProducts] = useState([]);
@@ -111,12 +112,11 @@ const Products = ({ cateId, filters, sort, keySearch }) => {
         <Container>
 
             {(cateId && filteredProducts.length > 0) ? filteredProducts.map((item) =>
-                <Product item={item} key={item.id}></Product>
+                <Product item={item} width={18.6} key={item.id}></Product>
             ) :
-                products.slice(0, 12).map((item, index) => (
-                    <Product item={item} key={item.id}></Product>
+                products.slice(0, 10).map((item, index) => (
+                    <Product item={item} width={18.6} key={item.id}></Product>
                 ))
-
             }
 
 
