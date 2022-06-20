@@ -24,14 +24,14 @@ const userSlice = createSlice({
         addToken: (state, action) => {
             state.token = localStorage.getItem('token')
         }
-        , logoutSuccess: (state, action) => {
+        ,
+        logoutSuccess: (state, action) => {
             state.token = null;
-            localStorage.removeItem('persist:root');
             state.currentUser = null;
             state.isFetching = false;
-            state.error = true;
+            state.error = false;
+            localStorage.removeItem('persist:root');
             localStorage.clear();
-
         }
     }
 })

@@ -1,21 +1,21 @@
 export const slideItems = [
     {
         id: 1,
-        img: "https://free.vector6.com/wp-content/uploads/2021/03/freepng1423-hinh-ve-nhan-vat-co-gai-xinh-dep-quyen-ru-png-13.png",
+        img: "https://media.coolmate.me/cdn-cgi/image/width=1920,quality=100/uploads/June2022/Desktop-tk.jpeg",
         title: "SUMMER SALE",
         desc: "DONT'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL.",
         bg: "f5fafd"
     },
     {
         id: 2,
-        img: "https://free.vector6.com/wp-content/uploads/2021/03/freepng1452-hinh-ve-nhan-vat-co-gai-xinh-dep-quyen-ru-png-42.png",
+        img: "https://media.coolmate.me/cdn-cgi/image/width=1920,quality=100/uploads/May2022/Hero-banner-CleanVN_42.png",
         title: "AUTMN COLLECTION",
         desc: "DONT'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL.",
         bg: "fcf1ed"
     },
     {
         id: 3,
-        img: "https://free.vector6.com/wp-content/uploads/2021/03/freepng1439-hinh-ve-nhan-vat-co-gai-xinh-dep-quyen-ru-png-29.png",
+        img: "https://media.coolmate.me/cdn-cgi/image/width=1920,quality=100/uploads/May2022/Hero-Excool-Website.jpg",
         title: "FLASH SALE",
         desc: "DONT'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVAL.",
         bg: "fbf0f4"

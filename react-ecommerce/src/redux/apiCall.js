@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React from 'react';
+
 import { userRequest } from '../requestMethods';
 import { resetProductInCart } from './cartRedux';
 import { loginFailure, loginStart, loginSuccess, logoutSuccess } from "./userRedux";

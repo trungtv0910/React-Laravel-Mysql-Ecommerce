@@ -281,7 +281,7 @@ const Product = () => {
                             <Amount>{quantity}</Amount>
                             <Add onClick={() => handleQuantity('add')} style={{ cursor: "pointer" }} />
                         </AmountContainer>
-                        <Button onClick={() => handleAddToCart()}>Add To Cart</Button>
+                        <Button onClick={() => handleAddToCart()}>Thêm Giỏ Hàng</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>

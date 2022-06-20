@@ -1,8 +1,8 @@
-import { Accordion, AccordionDetails, AccordionSummary, Badge, Button, Collapse, IconButton, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles, Menu } from '@material-ui/core';
-import { ExpandLess, ReorderOutlined, Search, StarBorder, ViewList } from '@material-ui/icons';
+import { Accordion, AccordionSummary, Badge, Button, List, ListItem, ListItemIcon, ListItemText, Menu, makeStyles } from '@material-ui/core';
+import { ReorderOutlined, Search } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import MailIcon from '@material-ui/icons/Mail';
+
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
@@ -150,7 +150,6 @@ const Navbar = () => {
         <Container>
             <Warapper >
                 <Left>
-
                     <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         <MenuIcon />
                     </Button>
@@ -160,7 +159,6 @@ const Navbar = () => {
                         keepMounted
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
-
                     >
                         <ListItem button>
                             <ListItemIcon>
@@ -168,8 +166,6 @@ const Navbar = () => {
                             </ListItemIcon>
                             <ListItemText primary="All Categories" />
                         </ListItem>
-                        {/* <MenuItem onClick={handleClose}> */}
-
                         {dataCategories && dataCategories.map((item, index) => (
                             <div key={item.id}>
                                 {item.parent_id == 0 && item.delete_at == null &&
@@ -185,7 +181,6 @@ const Navbar = () => {
                                         {dataCategories.map((itemChild, childKey) => (
                                             <div key={itemChild.id}>
                                                 {itemChild.parent_id != 0 && itemChild.parent_id === item.id &&
-
                                                     <List component="nav" aria-label="main mailbox folders" key={itemChild.id}>
                                                         <StyledLink to={`/products/${itemChild.id}`} state={{ cateName: itemChild.name }} >
                                                             <ListItem button onClick={handleClose}>
@@ -196,47 +191,38 @@ const Navbar = () => {
                                                             </ListItem>
                                                         </StyledLink>
                                                     </List>
-
                                                 }
                                             </div>
                                         ))}
                                     </Accordion>
-
                                 }
                             </div>
                         ))}
-
-
                     </Menu>
 
 
-                    <Language>EN</Language>
+                    <Language>VI</Language>
                     <SearchContainer>
                         <Input value={inputSearch} onChange={(e) => setInputSearch(e.target.value)} />
                         <Search className="search_icon" style={{ color: "gray", fontSize: 16, cursor: "pointer" }} onClick={() => handleSearch()}></Search>
                     </SearchContainer>
                 </Left>
                 <Center>
-
                     <StyledLink to="/" >
                         <Logo>WECO</Logo>
                     </StyledLink>
-
-
-
-
                 </Center>
                 <Right>
                     {!user ? <>
                         <StyledLink to="/register">
-                            <MenuItem>REGISTER</MenuItem>
+                            <MenuItem>ĐĂNG KÝ</MenuItem>
                         </StyledLink>
-                        <StyledLink to="/login" > <MenuItem>SIGN IN</MenuItem></StyledLink>
+                        <StyledLink to="/login" > <MenuItem>ĐĂNG NHẬP</MenuItem></StyledLink>
                     </>
                         :
                         <>
-                            <MenuItem>Tài khoản: {user.user.name}</MenuItem>
-                            <StyledLink to="/logout" > <MenuItem>LOGOUT</MenuItem></StyledLink>
+                            <MenuItem>TÀI KHOẢN: {user.user.name}</MenuItem>
+                            <StyledLink to="/logout" > <MenuItem>ĐĂNG XUẤT</MenuItem></StyledLink>
                         </>
                     }
                     <StyledLink to="/cart" >

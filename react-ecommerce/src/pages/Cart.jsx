@@ -7,7 +7,7 @@ import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import { mobile } from '../responsive'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { handleProductCountDown, handleProductCountUp, removeProductInCart } from '../redux/cartRedux'
 // import StripeCheckout from "react-stripe-checkout";
 
@@ -67,7 +67,7 @@ flex: 2;
 display: flex;
 `
 const Image = styled.img`
-    width: 200px;
+    width: 130px;
 `
 const Details = styled.div`
     padding: 20px;
@@ -169,10 +169,17 @@ transition: all 0.5s ease;
         cursor: pointer;
         transform: scale(1.2);
         color: red;
-
     }
-
 `
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
 
 
 
@@ -215,22 +222,22 @@ const Cart = () => {
         }
     }
 
-
-
-
     return (
         <Container>
             <Announcement />
             <Navbar />
             <Wrapper>
-                <Title>YOUR BAG</Title>
+                <Title>GIỎ HÀNG</Title>
                 <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <StyledLink to="/">
+                        <TopButton>Tiếp Tục Mua Sắm</TopButton>
+                    </StyledLink>
+
                     <TopTexts>
-                        <TopText>Shopping Bag(2)</TopText>
-                        <TopText>Withlist(2)</TopText>
+                        <TopText>Túi Đồ(2)</TopText>
+                        <TopText>Yêu Thích(2)</TopText>
                     </TopTexts>
-                    <TopButton type="filled">CHECKOUT NOW</TopButton>
+                    <TopButton type="filled">Mua Hàng Ngay</TopButton>
                 </Top>
                 <Bottom>
                     <Info>
@@ -241,14 +248,14 @@ const Cart = () => {
                                     <ProductDetail >
                                         <Image src={process.env.REACT_APP_BACKEND_URL + item.feature_image_path} />
                                         <Details>
-                                            <ProductName> <b>Product:</b>{item.name}</ProductName>
+                                            <ProductName> <b>Sản phẩm: </b>{item.name}</ProductName>
                                             <ProductId> <b>ID:</b>{item.id}</ProductId>
                                             <ProductColor color={item.color ? item.color : "black"} />
                                             <ProductSize> <b>size:</b>{item.size ? item.size : "Ngẫu nhiên"}</ProductSize>
                                         </Details>
                                     </ProductDetail>
                                     <PriceDetail>
-                                        {item.price}đ/1
+                                        {new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(item.price)}/1
                                     </PriceDetail>
                                     <PriceDetail>
                                         <ProductAmountContainer>
@@ -257,7 +264,7 @@ const Cart = () => {
                                             <Remove style={{ cursor: "pointer" }} onClick={() => handleQuantityProduct("down", item, index)} />
 
                                         </ProductAmountContainer>
-                                        <ProductPrice> {item.quantity * item.price}đ</ProductPrice>
+                                        <ProductPrice>  {new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(item.quantity * item.price)}</ProductPrice>
                                     </PriceDetail>
                                     <PriceDetail style={{ width: "100px" }}>
                                         <IconDelete onClick={() => handleRemoveProduct(item)}>
@@ -272,22 +279,23 @@ const Cart = () => {
 
                     </Info>
                     <Summary>
-                        <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+                        <SummaryTitle>Đơn Hàng Tóm Tắt</SummaryTitle>
                         <SummaryItem>
-                            <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>{cart.total}đ</SummaryItemPrice>
+                            <SummaryItemText>Tổng Tiền</SummaryItemText>
+                            <SummaryItemPrice>
+                                {new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(cart.total)}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
-                            <SummaryItemText>Estimated Shipping</SummaryItemText>
+                            <SummaryItemText>Phí Vận Chuyển</SummaryItemText>
                             <SummaryItemPrice>20.000đ</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
-                            <SummaryItemText>Shinging Discount</SummaryItemText>
+                            <SummaryItemText>Mã Giảm Giá</SummaryItemText>
                             <SummaryItemPrice>-20.000đ</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type="total">
-                            <SummaryItemText >Total</SummaryItemText>
-                            <SummaryItemPrice>{cart.total}đ</SummaryItemPrice>
+                            <SummaryItemText >Thành Tiền</SummaryItemText>
+                            <SummaryItemPrice>  {new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(cart.total)}</SummaryItemPrice>
                         </SummaryItem>
                         {/* <StripeCheckout
                             name="Weco Shop"
@@ -300,9 +308,7 @@ const Cart = () => {
                             stripeKey={KEY}
                         /> */}
 
-                        <SummaryButton onClick={handleCheckOut} >CHECKOUT NOW</SummaryButton >
-
-
+                        <SummaryButton onClick={handleCheckOut} >THANH TOÁN NGAY</SummaryButton >
                     </Summary>
                 </Bottom>
             </Wrapper >

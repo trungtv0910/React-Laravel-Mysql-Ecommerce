@@ -138,7 +138,7 @@ const Product = ({ item, width }) => {
         </Warapper>
         <InfoProduct>
           <Title>{item.name}</Title>
-          <Price>{!item.discount ? item.price : item.discount}đ <del>{item.discount ? item.price + 'đ' : ''}</del> </Price>
+          <Price> {new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(item.price)} <del>{item.discount ? new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(item.price) : ''}</del></Price>
         </InfoProduct>
       </Container>
 

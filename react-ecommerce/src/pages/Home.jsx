@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Announcement from '../components/Announcement'
+import Bannerhome from '../components/Bannerhome'
 import Categories from '../components/Categories'
 import Footer from '../components/Footer'
 
@@ -28,6 +29,7 @@ const Home = () => {
             <Categories />
             <Title>SẢN PHẨM NỔI BẬT</Title>
             <Products />
+            <Bannerhome />
             <Newsletter />
             <Footer />
         </div>

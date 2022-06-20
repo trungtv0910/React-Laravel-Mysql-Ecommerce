@@ -55,8 +55,8 @@ color:#fff;
 const Newsletter = () => {
     return (
         <Container>
-            <Title>Newsletter</Title>
-            <Description>Get timly update from you favorite products</Description>
+            <Title>Tin Mới </Title>
+            <Description>Nhận cập nhập kịp thời từ các sản phẩm yêu thích của bạn.</Description>
             <InputContainer>
                 <Input />
                 <Button>

@@ -99,7 +99,7 @@ const Footer = () => {
                 </SocialContainer>
             </Left>
             <Center>
-                <Title>Userfull Link</Title>
+                <Title>Liên Kết</Title>
                 <List>
                     <ListItem>Trang Chủ</ListItem>
                     <ListItem>Giỏ Hàng</ListItem>
@@ -112,7 +112,7 @@ const Footer = () => {
                 </List>
             </Center>
             <Right>
-                <Title>Contact</Title>
+                <Title>Liên hệ</Title>
                 <ContactItem>
                     <Room style={{ marginRight: "10px" }} />
                     123 Trần Phú, Đà Nẵng

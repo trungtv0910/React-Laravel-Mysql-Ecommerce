@@ -72,7 +72,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const { isFetching, error } = useSelector((state) => state.user);
-
+    // console.log(error)
     const submit = async (e) => {
         e.preventDefault();
 
@@ -91,7 +91,8 @@ const Login = () => {
                     <Input placeholder="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <Input placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                    <Button disabled={isFetching} >LOGIN</Button>
+                    {/* <Button disabled={isFetching} >LOGIN</Button> */}
+                    <Button  >LOGIN</Button>
                     {error && <Error>Something went wrong...</Error>}
                     <Link>DO NOT REMEMBER THE PASSWORD?</Link>
                     <Link>CREATE A NEW ACCOUNT</Link>
