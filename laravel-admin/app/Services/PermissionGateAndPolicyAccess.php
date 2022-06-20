@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Policies\ProductPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\RolePolicy;
+use App\Policies\OrderPolicy;
 
 class PermissionGateAndPolicyAccess  {
     public function setGateAndPolicyAccess(){
@@ -14,6 +15,7 @@ class PermissionGateAndPolicyAccess  {
         $this->defineGateProduct();
         $this->defineGateUser();
         $this->defineGateRole();
+        $this->defineGateOrder();
     }
     public function defineGateCategory(){
         Gate::define('list-category', [CategoryPolicy::class, 'view']);
@@ -41,6 +43,12 @@ class PermissionGateAndPolicyAccess  {
         Gate::define('add-role', [RolePolicy::class, 'create']);
         Gate::define('edit-role',[RolePolicy::class, 'edit']);
         Gate::define('delete-role',[RolePolicy::class, 'delete']);
+    }
+    public function defineGateOrder(){
+
+        Gate::define('list-order', [OrderPolicy::class, 'view']);
+        Gate::define('delete-order',[OrderPolicy::class, 'delete']);
+        Gate::define('edit-order',[OrderPolicy::class, 'edit']);
     }
 
 }

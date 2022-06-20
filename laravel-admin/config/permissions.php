@@ -29,6 +29,9 @@ return [
         'add-role'=>'add_role',
         'edit-role'=>'edit_role',
         'delete-role'=>'delete_role',
+        'list-order'=>'list_order',
+        'delete-order'=>'delete_order',
+        'edit-order'=>'edit_order',
 
 
 

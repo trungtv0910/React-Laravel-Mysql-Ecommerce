@@ -51,8 +51,9 @@
                             <div class="warapper_do_action   mb-sm-0">
                                 <select name="" id="select_action" class="">
                                     <option value="0">Hành động</option>
+                                    @can('delete-order')
                                     <option value="delete">Xoá</option>
-
+                                    @endcan
                                 </select>
                                 <input type="submit" id="do_action" class="btn  btn-dark action" disabled
                                        value="Áp Dụng">
@@ -94,16 +95,14 @@
                                             <td>{{$orderItem->created_at}}</td>
 
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm ">
-                                                    <i class=" icon-eye "></i>
-                                                </button>
-                                                @can('edit-user')
+
+                                                @can('edit-order')
                                                 <a href="{{route('order.detail',['id'=>$orderItem['id']])}}" data-url=""
                                                    class="btn btn-dark btn-sm">
-                                                    <i class=" icon-pencil "></i>
+                                                    <i class=" icon-eye "></i>
                                                 </a>
                                                 @endcan
-                                                @can('delete-user')
+                                                @can('delete-order')
 
                                                 <a href="{{route('user.delete',['id'=>$orderItem['id']])}}"
                                                    data-url="{{route('user.delete',['id'=>$orderItem['id']])}}"

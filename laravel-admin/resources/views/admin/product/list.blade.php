@@ -59,8 +59,9 @@
                             <div class="warapper_do_action   mb-sm-0">
                                 <select name="" id="select_action" class="">
                                     <option value="0">Hành động</option>
+                                    @can('delete-product')
                                     <option value="delete">Xoá</option>
-
+                                    @endcan
                                 </select>
                                 <input type="submit" id="do_action" class="btn  btn-dark action" disabled
                                        value="Áp Dụng">

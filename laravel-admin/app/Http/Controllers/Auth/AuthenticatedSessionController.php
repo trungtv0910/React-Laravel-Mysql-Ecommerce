@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
             'password' => ['required'],
         ]);
 
-//        $credentials['is_admin']=1;
+        $credentials['is_admin']=1;
         if (Auth::attempt($credentials)) {
             return $request->session()->regenerate();
 

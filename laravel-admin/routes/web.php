@@ -66,12 +66,9 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('order')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('order.list');
-        Route::get('/create', [OrderController::class, 'create'])->name('order.add');
-        Route::post('/store', [OrderController::class, 'store'])->name('order.store');
-        Route::get('/edit/{id}', [OrderController::class, 'detail'])->name('order.detail');
-        Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
-        Route::post('/update/{id}', [OrderController::class, 'update'])->name('order.update');
+        Route::get('/', [OrderController::class, 'index'])->name('order.list')->middleware(['auth','can:list-order']);
+        Route::get('/edit/{id}', [OrderController::class, 'detail'])->name('order.detail')->middleware(['auth','can:edit-order']);
+        Route::get('/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete')->middleware(['auth','can:delete-order']);
     });
     Route::prefix('test')->group(function () {
         Route::get('/', function (){

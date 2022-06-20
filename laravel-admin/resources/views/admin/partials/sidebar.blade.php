@@ -59,12 +59,14 @@
         </li>
         @endcan
 
+        @can('list-order')
         <li class="nav-item">
             <a class="nav-link" href="{{route('order.list')}}">
                 <span class="menu-title">Quản Lý Đơn Hàng</span>
                 <i class="icon-book-open menu-icon"></i>
             </a>
         </li>
+        @endcan
         <hr>
 
     </ul>
