@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::all();
+        $data = Product::latest()->get();
         return response()->json([
             'status' => 200,
             'message' => 'Get data success',
@@ -176,5 +176,18 @@ class ProductController extends Controller
             ], 200);
         }
         return response()->json([], 500);
+    }
+
+
+    public function listImageOrProductId($id)
+    {
+        $data = Product::find($id);
+        $data = $data->images;
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Get data success',
+            'data' => $data
+        ], 200);
     }
 }

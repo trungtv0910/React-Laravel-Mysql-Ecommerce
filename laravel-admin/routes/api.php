@@ -73,7 +73,7 @@ Route::get('/allProducts', [V2ProductController::class, 'allProductsWithCate']);
 
 Route::get('/allCategories', [V2CategoryController::class, 'getAllCate']);
 Route::get('/relatedProduct/{id}', [V2ProductController::class, 'relatedProduct']); // get product inthe same cate
-
+Route::get('/listImageOfProduct/{id}', [V2ProductController::class, 'listImageOrProductId']); // get list image for product
 
 //Protected route
 Route::middleware('auth:sanctum')->group(function () {

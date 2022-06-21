@@ -9,7 +9,7 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Newsletter from "../components/Newsletter"
 import { addProductToCartServer, testCartServer } from "../redux/apiCart"
-import { getProductServer, getRelatedProductServer } from "../redux/apiProductCall"
+import { getImageOfProductServer, getProductServer, getRelatedProductServer } from "../redux/apiProductCall"
 import { addProduct } from "../redux/cartRedux"
 import { mobile } from "../responsive"
 
@@ -30,6 +30,8 @@ ${mobile({ padding: "10px", flexDirection: "column" })}
 `
 const ImgContainer = styled.div`
 flex:1;
+display: flex;
+flex-direction: column;
 `
 const Image = styled.img`
 width:100%;
@@ -37,6 +39,19 @@ height:90vh;
 object-fit: cover;
 ${mobile({ height: "40vh" })};
 `
+
+const ListImage = styled.div`
+    display: flex;
+    padding: 20px 0px;
+    flex-wrap: nowrap;
+    gap:15px;
+`
+const ImageChild = styled.img`
+width: 22%;
+flex-basis: 22%;
+
+`
+
 
 const InfoContainer = styled.div`
 flex:1;
@@ -138,6 +153,7 @@ const Product = () => {
     const id = location.pathname.split('/')[2];
     const [product, setProduct] = useState({});
     const [productsRelated, setProductsRelated] = useState([]);
+    const [listImage, setListImage] = useState([]);
     //set list color and size form server
     const [listColor, setlistColor] = useState([]);
     const [listSize, setlistSize] = useState([]);
@@ -181,6 +197,11 @@ const Product = () => {
                     let resProductRelated = await getRelatedProductServer(res.data.data.id);
                     if (resProductRelated && resProductRelated.data.status === 200) {
                         setProductsRelated(resProductRelated.data.data);
+                    }
+                    let resImageList = await getImageOfProductServer(res.data.data.id);
+
+                    if (resImageList) {
+                        setListImage(resImageList.data.data);
                     }
 
                 } else {
@@ -241,6 +262,16 @@ const Product = () => {
                 <ToastContainer theme="colored" />
                 <ImgContainer>
                     <Image src={process.env.REACT_APP_BACKEND_URL + product.feature_image_path} />
+                    <ListImage>
+                        {listImage && listImage.map((item, index) => (
+
+                            <ImageChild key={index} src={process.env.REACT_APP_BACKEND_URL + item.image_path} />
+
+
+                        ))}
+
+
+                    </ListImage>
                 </ImgContainer>
 
                 <InfoContainer>
@@ -289,7 +320,7 @@ const Product = () => {
             {/* <Newsletter /> */}
             <Footer />
 
-        </Container>
+        </Container >
     )
 }
 export default Product
