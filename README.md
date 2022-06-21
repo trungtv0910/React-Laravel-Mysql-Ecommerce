@@ -19,7 +19,8 @@ pass :12345678
 
 
 ### Image project Reactjs
-![React Home](https://user-images.githubusercontent.com/69226244/174641570-e2bffeaa-b779-451b-b787-24ad3f93c225.png)
+![React Home](https://user-images.githubusercontent.com/69226244/174710506-492196cd-2426-4d3f-91ac-7d6b49bf151d.png)
+![React Detail product](https://user-images.githubusercontent.com/69226244/174710977-fbebcd48-26d8-40a6-882e-134868e5f89c.png)
 ![Login Client](https://user-images.githubusercontent.com/69226244/174641836-92766957-3df0-43b1-ba0a-9bca212816fb.png)
 ### Image project Laravel
 ![Laravel product manage](https://user-images.githubusercontent.com/69226244/174642173-cf02c0fe-b4c2-4317-975a-525dcbe32b7c.png)

@@ -44,11 +44,11 @@ const ListImage = styled.div`
     display: flex;
     padding: 20px 0px;
     flex-wrap: nowrap;
-    gap:15px;
+    gap:20px;
 `
 const ImageChild = styled.img`
-width: 22%;
-flex-basis: 22%;
+width: 22.8%;
+flex-basis: 22.8%;
 
 `
 
