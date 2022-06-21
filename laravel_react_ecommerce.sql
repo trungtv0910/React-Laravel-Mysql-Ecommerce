@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2022 at 05:44 PM
+-- Generation Time: Jun 21, 2022 at 05:26 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.22
 
@@ -557,7 +557,7 @@ CREATE TABLE `products` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `desc` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -610,8 +610,8 @@ INSERT INTO `products` (`id`, `name`, `price`, `discount`, `feature_image_path`,
 (45, 'the news', '1222222', NULL, '/storage/products_image/10/eFtfVYX4O2VxQOTHkc6D.jpeg', 'hw16-black_1620449239.jpeg', '<p>aaaaaaaaaaaaaaaaaasd</p>', '[\"Yellow\",\"White\"]', '[\"SX\",\"M\",\"L\",\"XL\",\"S\"]', 1, NULL, NULL, NULL, '2022-06-08 09:14:31', '2022-06-17 11:15:09', NULL, 1),
 (46, 'SMG giá cao', '100000000', NULL, '/storage/products_image/1/WNMes2qzoTwchL3pJ9OX.png', 'arabica_den__1__8984e3eb55a14a2e8e9477e889b141ab_master.png', '<p>the new</p>', '[\"Red\",\"Green\",\"Blue\"]', '[\"SX\",\"M\",\"L\",\"XL\",\"S\"]', 1, 2, NULL, NULL, '2022-06-10 16:12:57', '2022-06-17 11:14:57', '<p>m&ocirc; tả</p>', 1),
 (47, 'SMG giá cao2', '100000000', NULL, '/storage/products_image/1/aI5pySW8w8II7pHGdkpE.png', '13.png', '<p>the new</p>', '[\"Green\",\"Black\"]', '[\"SX\",\"M\",\"S\"]', 1, 2, NULL, NULL, '2022-06-10 16:16:28', '2022-06-17 11:14:51', '<p>m&ocirc; tả</p>', 1),
-(48, 'test json', '300000', NULL, '/storage/products_image/1/ufLfxv3tcNfRnSVFMpqj.png', '15.png', '<p>test&nbsp;</p>', '[\"Blue\",\"While\",\"Yellow\"]', '[\"XS\",\"M\",\"L\"]', 1, NULL, NULL, NULL, '2022-06-11 15:38:22', '2022-06-11 15:38:22', '<p>&aacute;dasd</p>', 1),
-(49, 'Quần Đen Gym', '100000000', NULL, '/storage/products_image/1/G526MKtILtntYr5P2kO4.jpg', '272336970_5115328628518215_7267628079782510591_n.jpg', '<p>the new</p>', '[]', '[]', 1, 2, NULL, NULL, '2022-06-15 03:48:34', '2022-06-17 11:14:11', '<p>m&ocirc; tả</p>', 1);
+(48, 'Combo 03 Áo Polo thể thao nam ProMax-S1 Logo thoáng khí', '300000', NULL, '/storage/products_image/51/bzw2EZ1p0HDV2W4i8Dhs.jpg', 'Mixmau3.jpg', '<p>Coolmate đ&atilde; cho ra mắt rất nhiều sản phẩm &aacute;o thể thao với nhiều chất liệu: maxcool, quickdry,... v&agrave; với mục ti&ecirc;u tập trung v&agrave;o chất liệu để đem đến cho kh&aacute;ch h&agrave;ng những chiếc &aacute;o tốt bắt nguồn từ chất liệu, chiếc &aacute;o&nbsp;<strong>Polo thể thao nam Promax-S1</strong>&nbsp;đ&atilde; được ra mắt v&agrave;o đ&uacute;ng thời điểm m&ugrave;a h&egrave; n&agrave;y để đảm bảo kh&aacute;ch h&agrave;ng nh&agrave; Coolmate lu&ocirc;n được thoải m&aacute;i, dễ chịu m&agrave; vẫn lịch sự trong bất kỳ trường hợp n&agrave;o. C&ugrave;ng t&igrave;m hiểu v&igrave; sao chiếc &aacute;o Polo thể thao n&agrave;y lại l&agrave; sản phẩm m&agrave; Coolmate t&acirc;m đắc để gửi đến kh&aacute;ch h&agrave;ng.&nbsp;</p>', '[\"Blue\",\"While\",\"Yellow\"]', '[\"XS\",\"M\",\"L\"]', 1, NULL, NULL, NULL, '2022-06-11 15:38:22', '2022-06-21 03:25:22', '<p>&Aacute;o Polo thể thao nam Promax-S1 chiếc &aacute;o polo được thiết kế d&agrave;nh ri&ecirc;ng cho bạn.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<ul>\r\n	<li><strong>Kiểu d&aacute;ng Slighly Slim Fi</strong>t để bạn lu&ocirc;n cảm thấy vừa vặn trong mọi cử động&nbsp;</li>\r\n	<li><strong>Định lượng vải chỉ 155gsm</strong>&nbsp;si&ecirc;u nhẹ cảm gi&aacute;c mặc như kh&ocirc;ng mặc&nbsp;</li>\r\n	<li><strong>C&ocirc;ng nghệ xử l&yacute; ho&agrave;n thiện:&nbsp;</strong>Quickdry (Nhanh kh&ocirc;) v&agrave; Wicking (thấm h&uacute;t nhanh)</li>\r\n</ul>', 1),
+(49, 'Combo 03 Quần short nam thể thao Recycle 5\" thoáng khí', '299000', NULL, '/storage/products_image/51/06d4XUcj67EddycA1RBY.jpg', 'Tanktop_-_Aqua22denm.jpg', '<p>Coolmate đ&atilde; cho ra mắt rất nhiều sản phẩm thể thao với nhiều chất liệu: Maxcool, Poly Quickdry,... Tiếp nối những sản phẩm thể thao trước đ&oacute; v&agrave; đi theo xu hướng ng&agrave;nh may mặc &quot;thời trang bền vững&quot;, Coolmate ra mắt sản phẩm&nbsp;<strong>Quần thể thao nam 5 Inch Recycle&nbsp;</strong>th&acirc;n thiện với m&ocirc;i trường với th&agrave;nh phần ch&iacute;nh l&agrave;&nbsp;<em>100% sợi Recycle</em>. C&ugrave;ng t&igrave;m hiểu v&igrave; sao chiếc quần thể thao Recycle n&agrave;y l&agrave; sản phẩm m&agrave; ch&uacute;ng t&ocirc;i muốn gửi đến kh&aacute;ch h&agrave;ng.&nbsp;</p>', '[\"Red\",\"Green\"]', '[\"XS\",\"S\",\"M\"]', 1, 2, NULL, NULL, '2022-06-15 03:48:34', '2022-06-21 03:20:44', '<p>Chất liệu: 100% sợi Recycle, theo xu hướng thời trang bền vững</p>\r\n\r\n<p>C&ocirc;ng nghệ xử l&yacute; ho&agrave;n thiện vải: Quick-Dry (Nhanh kh&ocirc;) v&agrave; Wicking (Thấm h&uacute;t nhanh)</p>', 1);
 
 -- --------------------------------------------------------
 
@@ -646,8 +646,6 @@ INSERT INTO `product_category` (`id`, `product_id`, `category_id`, `created_at`,
 (34, 43, 3, '2022-06-08 09:11:44', '2022-06-08 09:11:44'),
 (35, 44, 3, '2022-06-08 09:13:12', '2022-06-08 09:13:12'),
 (44, 8, 20, '2022-06-11 16:31:40', '2022-06-11 16:31:40'),
-(47, 49, 39, '2022-06-17 11:14:11', '2022-06-17 11:14:11'),
-(48, 48, 40, '2022-06-17 11:14:28', '2022-06-17 11:14:28'),
 (49, 46, 20, '2022-06-17 11:14:38', '2022-06-17 11:14:38'),
 (50, 46, 39, '2022-06-17 11:14:38', '2022-06-17 11:14:38'),
 (51, 45, 20, '2022-06-17 11:15:09', '2022-06-17 11:15:09'),
@@ -668,7 +666,9 @@ INSERT INTO `product_category` (`id`, `product_id`, `category_id`, `created_at`,
 (66, 2, 20, '2022-06-17 11:19:20', '2022-06-17 11:19:20'),
 (67, 12, 41, '2022-06-17 11:19:38', '2022-06-17 11:19:38'),
 (68, 13, 42, '2022-06-17 11:19:48', '2022-06-17 11:19:48'),
-(69, 14, 40, '2022-06-17 11:20:00', '2022-06-17 11:20:00');
+(69, 14, 40, '2022-06-17 11:20:00', '2022-06-17 11:20:00'),
+(70, 49, 20, '2022-06-21 03:18:52', '2022-06-21 03:18:52'),
+(71, 48, 39, '2022-06-21 03:25:22', '2022-06-21 03:25:22');
 
 -- --------------------------------------------------------
 
@@ -720,7 +720,14 @@ INSERT INTO `product_images` (`id`, `image_path`, `image_name`, `product_id`, `c
 (32, '/storage/products_image/yPwskFEb0W8exz43kUOn.jpg', 'mitre-181229-ghi5_large.jpg', 37, '2022-05-26 07:18:12', '2022-05-26 07:18:12'),
 (33, '/storage/products_image/10/kL0qM5aeMe3foC2GAT7i.jpg', 'girl3.jpg', 45, '2022-06-08 09:14:31', '2022-06-08 09:14:31'),
 (34, '/storage/products_image/10/PBKGMw3fy9sZq8ls7W9l.jpeg', 'hw16-black_1620449239.jpeg', 45, '2022-06-08 09:14:31', '2022-06-08 09:14:31'),
-(35, '/storage/products_image/10/tpUYj6k1ZasNgi0SuSI6.jpg', 'IMG_9846-100x100.jpg', 45, '2022-06-08 09:14:31', '2022-06-08 09:14:31');
+(35, '/storage/products_image/10/tpUYj6k1ZasNgi0SuSI6.jpg', 'IMG_9846-100x100.jpg', 45, '2022-06-08 09:14:31', '2022-06-08 09:14:31'),
+(36, '/storage/products_image/51/b1kyfv4mdsaatGyAGtUy.jpg', 'DSC04239-copy.jpg', 49, '2022-06-21 03:19:57', '2022-06-21 03:19:57'),
+(37, '/storage/products_image/51/O008zcvb4oQ8t7K2Thsi.jpg', 'DSC04215-copy_39.jpg', 49, '2022-06-21 03:19:57', '2022-06-21 03:19:57'),
+(38, '/storage/products_image/51/atPNRFXKSsTCPiU4FPyb.jpg', 'DSC04235-copy-2.jpg', 49, '2022-06-21 03:19:57', '2022-06-21 03:19:57'),
+(39, '/storage/products_image/51/aIqyYwaPf0TCh9QhwhkX.jpg', 'IMG_6382-2.jpg', 48, '2022-06-21 03:25:22', '2022-06-21 03:25:22'),
+(40, '/storage/products_image/51/VyymDBAWUzQGbJKDmJ6N.jpg', 'IMG_6483_24.jpg', 48, '2022-06-21 03:25:22', '2022-06-21 03:25:22'),
+(41, '/storage/products_image/51/QORRJ5VKMsuTufyoF8PP.jpeg', 'pros123-2_47.jpeg', 48, '2022-06-21 03:25:22', '2022-06-21 03:25:22'),
+(42, '/storage/products_image/51/HFwLv72MR8Ir6nV8hlWR.jpg', 'pros126s.jpg', 48, '2022-06-21 03:25:22', '2022-06-21 03:25:22');
 
 -- --------------------------------------------------------
 
@@ -1154,13 +1161,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `product_tags`
