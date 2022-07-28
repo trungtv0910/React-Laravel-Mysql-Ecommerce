@@ -26,17 +26,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-  // const getUser = async () => {
-
-  //   // let res = await user();
-  //   let loginFE = await login({ email: 'daica@gmail.com', password: 'Vantrung1' });
-  //   console.log('login:', loginFE);
-  //   let userFE = await user();
-  //   console.log('infoOf', userFE);
-  // }
 
   const user = useSelector((state) => state.user.currentUser);
   console.log('GERUSSER', user)
